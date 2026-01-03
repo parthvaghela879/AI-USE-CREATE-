@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GANESHA - Divine Shopping Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Indian Textile Patterns */
+    .ikat-pattern {
+      background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255, 153, 51, 0.04) 15px, rgba(255, 153, 51, 0.04) 30px),
+        repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(19, 136, 8, 0.04) 15px, rgba(19, 136, 8, 0.04) 30px);
+    }
+    
+    .block-print-pattern {
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255, 153, 51, 0.05) 2%, transparent 2%),
+        radial-gradient(circle at 80% 80%, rgba(19, 136, 8, 0.05) 2%, transparent 2%);
+      background-size: 40px 40px;
+    }
+    
+    /* Decorative Indian Border */
+    .indian-border {
+      border-image: repeating-linear-gradient(
+        90deg,
+        #FF9933 0px, #FF9933 5px,
+        transparent 5px, transparent 10px,
+        #138808 10px, #138808 15px,
+        transparent 15px, transparent 20px
+      ) 1;
+    }
+    
+    /* Product Card Hover Effects */
+    .product-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(255, 153, 51, 0.2);
+    }
+    
+    /* Button Animations */
+    .btn-primary {
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 153, 51, 0.4);
+    }
+    
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn-primary:active::after {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .btn-secondary {
+      transition: all 0.2s ease;
+    }
+    
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(19, 136, 8, 0.4);
+    }
+    
+    /* Hero Slider Animation */
+    .hero-slider {
+      animation: slideShow 15s infinite ease-in-out;
+    }
+    
+    @keyframes slideShow {
+      0%, 30% { transform: translateX(0); }
+      33%, 63% { transform: translateX(-100%); }
+      66%, 96% { transform: translateX(-200%); }
+      100% { transform: translateX(0); }
+    }
+    
+    /* Mandala Decorative Background */
+    .mandala-accent {
+      background: 
+        radial-gradient(circle at center, transparent 40%, rgba(255, 153, 51, 0.08) 40%, rgba(255, 153, 51, 0.08) 42%, transparent 42%),
+        radial-gradient(circle at center, transparent 55%, rgba(19, 136, 8, 0.08) 55%, rgba(19, 136, 8, 0.08) 57%, transparent 57%);
+      background-size: 100px 100px;
+    }
+    
+    /* Sticky Navigation */
+    .nav-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
+    
+    /* Cart Badge Pulse */
+    .cart-badge {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
+    }
+    
+    /* Filter Checkbox Custom Style */
+    .filter-checkbox:checked {
+      accent-color: #FF9933;
+    }
+    
+    /* Quantity Button */
+    .quantity-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .quantity-btn:hover {
+      background-color: #FF9933;
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    /* Gold Shine Effect */
+    .gold-shine {
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+      background-size: 200% 200%;
+      animation: goldShine 3s ease infinite;
+    }
+    
+    @keyframes goldShine {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    /* Festive Diya Animation */
+    .diya-flicker {
+      animation: flicker 2s ease-in-out infinite;
+    }
+    
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    /* Category Icon Rotation */
+    .category-icon {
+      transition: transform 0.3s ease;
+    }
+    
+    .category-item:hover .category-icon {
+      transform: rotate(10deg) scale(1.15);
+    }
+    
+    /* Deal Timer Glow */
+    .timer-glow {
+      text-shadow: 0 0 10px rgba(255, 153, 51, 0.5);
+      animation: glow 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 10px rgba(255, 153, 51, 0.5); }
+      50% { text-shadow: 0 0 20px rgba(255, 153, 51, 0.8); }
+    }
+    
+    /* Page Transition */
+    .page-content {
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Rating Stars */
+    .star-filled {
+      color: #FFD700;
+      filter: drop-shadow(0 1px 2px rgba(255, 215, 0, 0.3));
+    }
+    
+    /* Image Gallery Hover */
+    .gallery-thumb {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .gallery-thumb:hover {
+      transform: scale(1.05);
+      border-color: #FF9933;
+    }
+    
+    /* Toast Notification Slide */
+    .toast-show {
+      animation: slideInRight 0.3s ease-out;
+    }
+    
+    @keyframes slideInRight {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    /* Loading Spinner */
+    .loading-spinner {
+      border: 3px solid rgba(255, 153, 51, 0.2);
+      border-top-color: #FF9933;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Rangoli Pattern */
+    .rangoli-corner {
+      background: 
+        linear-gradient(45deg, transparent 48%, #FF9933 48%, #FF9933 52%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, #138808 48%, #138808 52%, transparent 52%);
+      background-size: 20px 20px;
+      background-repeat: no-repeat;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full w-full overflow-auto" style="background-color: #f5f5f5;"><!-- Top Promotional Bar -->
+  <div class="w-full gold-shine text-white">
+   <div class="max-w-7xl mx-auto px-4 py-2 flex justify-center items-center text-sm font-semibold"><span class="diya-flicker mr-2">🪔</span> <span>Great Indian Festival Sale - Up to 80% Off | Free Delivery on Orders Above ₹499</span> <span class="diya-flicker ml-2">🪔</span>
+   </div>
+  </div><!-- Top Header Bar -->
+  <div class="w-full" style="background-color: #FF9933; color: white;">
+   <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap justify-between items-center text-sm">
+    <div class="flex items-center space-x-4"><span>📍 Deliver to: <strong>Mumbai 400001</strong></span>
+    </div>
+    <div id="site-tagline" class="hidden md:block font-medium text-base">
+     Divine Shopping Experience
+    </div>
+    <div class="flex items-center space-x-4"><button class="hover:opacity-80 font-semibold">हिंदी</button> <button class="hover:opacity-80">Help</button> <button class="hover:opacity-80">Sell</button>
+    </div>
+   </div>
+  </div><!-- Main Navigation -->
+  <nav class="nav-sticky w-full bg-black border-b-4 indian-border shadow-lg">
+   <div class="max-w-7xl mx-auto px-4 py-3">
+    <div class="flex items-center justify-between gap-4"><!-- Logo with Ganesha Icon --> <button onclick="changePage('home')" class="flex items-center space-x-2 flex-shrink-0 hover:opacity-80 transition-opacity">
+      <svg width="56" height="56" viewbox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="26" fill="#FF9933" opacity="0.15" /> <circle cx="28" cy="28" r="22" stroke="#FF9933" stroke-width="1.5" opacity="0.3" /> <!-- Ganesha Head with Elephant Features --> <ellipse cx="28" cy="22" rx="10" ry="8" fill="#FF9933" opacity="0.2" /> <path d="M28 14 C33 14 38 18 38 22 C38 26 33 30 28 30 M28 30 C23 30 18 26 18 22 C18 18 23 14 28 14" stroke="#FF9933" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /> <!-- Trunk (curved) --> <path d="M28 30 Q26 34 24 36 Q22 38 20 38" stroke="#FF9933" stroke-width="2.5" stroke-linecap="round" fill="none" /> <!-- Body --> <path d="M22 34 L34 34 M20 42 C20 42 22 38 28 38 C34 38 36 42 36 42" stroke="#FF9933" stroke-width="2.2" stroke-linecap="round" /> <!-- Third Eye (Tilak) --> <ellipse cx="28" cy="19" rx="2" ry="3" fill="#138808" /> <!-- Decorative Elements (Ears) --> <path d="M17 24 L19 26 M37 24 L39 26" stroke="#FF9933" stroke-width="2.2" stroke-linecap="round" /> <!-- Ornamental Dots --> <circle cx="22" cy="22" r="1.5" fill="#138808" opacity="0.7" /> <circle cx="34" cy="22" r="1.5" fill="#138808" opacity="0.7" /> <circle cx="28" cy="26" r="1" fill="#FFD700" />
+      </svg>
+      <div>
+       <div class="text-3xl font-bold leading-none" style="color: #FF9933; text-shadow: 2px 2px 4px rgba(251, 246, 241, 0.2);">
+        GANESHA
+       </div>
+       <div class="text-xs font-semibold tracking-wider" style="color: #ff0d00;">
+        .in
+       </div>
+      </div></button> <!-- Search Bar -->
+     <div class="flex-1 max-w-2xl">
+      <form class="flex" onsubmit="event.preventDefault(); handleSearch();"><input type="text" id="search-input" placeholder="Search for products, brands and more..." class="flex-1 px-4 py-3 border-2 rounded-l-lg focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #FF9933;"> <button type="submit" class="btn-primary px-8 py-3 rounded-r-lg text-white font-semibold" style="background-color: #FF9933;" aria-label="Search">
+        <svg width="22" height="22" viewbox="0 0 22 22" fill="none"><circle cx="10" cy="10" r="7" stroke="white" stroke-width="2.5" /> <path d="M15 15 L20 20" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+        </svg></button>
+      </form>
+     </div><!-- Right Actions -->
+     <div class="flex items-center space-x-6 flex-shrink-0"><button onclick="changePage('home')" class="hidden md:flex items-center space-x-2 hover:opacity-70 transition-opacity" aria-label="Account">
+       <svg width="28" height="28" viewbox="0 0 28 28" fill="none"><circle cx="14" cy="10" r="5" stroke="#FF9933" stroke-width="2.5" /> <path d="M4 24 C4 19 8 15 14 15 C20 15 24 19 24 24" stroke="#FF9933" stroke-width="2.5" stroke-linecap="round" />
+       </svg>
+       <div class="text-left">
+        <div class="text-xs" style="color: #ffffff;">
+         Hello, Guest
+        </div>
+        <div class="text-sm font-semibold" style="color: #ffffff;">
+         Account
+        </div>
+       </div></button> <button onclick="changePage('home')" class="hidden md:flex flex-col items-start hover:opacity-70 transition-opacity" aria-label="Orders">
+       <div class="text-xs" style="color: #ffffff;">
+        Returns
+       </div>
+       <div class="text-sm font-semibold" style="color: #ffffff;">
+        &amp; Orders
+       </div></button> <button onclick="changePage('cart')" class="relative hover:opacity-70 transition-opacity" aria-label="Shopping cart">
+       <svg width="36" height="36" viewbox="0 0 36 36" fill="none"><path d="M6 6 L9 6 L12 24 L30 24 L34 10 L12 10" stroke="#FF9933" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" /> <circle cx="14" cy="30" r="2.5" fill="#FF9933" /> <circle cx="28" cy="30" r="2.5" fill="#FF9933" />
+       </svg><span id="cart-count" class="cart-badge absolute -top-2 -right-2 w-7 h-7 flex items-center justify-center rounded-full text-sm font-bold text-white" style="background-color: #138808;">0</span> </button>
+     </div>
+    </div><!-- Category Menu -->
+    <div class="hidden md:flex items-center space-x-8 mt-3 pt-3 border-t border-gray-200"><button onclick="changePage('products')" class="flex items-center space-x-2 hover:text-orange-600 font-medium transition-colors" style="color: #ffffff;">
+      <svg width="18" height="18" viewbox="0 0 18 18" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.8" /> <rect x="10" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.8" /> <rect x="2" y="10" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.8" /> <rect x="10" y="10" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.8" />
+      </svg><span>All Categories</span> </button> <a href="#electronics" class="hover:text-orange-600 transition-colors" style="color: #ffffff;">Electronics</a> <a href="#fashion" class="hover:text-orange-600 transition-colors" style="color: #ffffff;">Fashion</a> <a href="#home" class="hover:text-orange-600 transition-colors" style="color: #ffffff;">Home &amp; Kitchen</a> <a href="#grocery" class="hover:text-orange-600 transition-colors" style="color: #ffffff;">Grocery</a> <a href="#deals" class="font-bold hover:text-orange-700 transition-colors" style="color: #FF9933;">🔥 Today's Deals</a>
+    </div>
+   </div>
+  </nav><!-- Page Container -->
+  <main class="w-full min-h-screen"><!-- HOMEPAGE -->
+   <div id="page-home" class="page-content"><!-- Hero Slider with Indian Festival Theme -->
+    <section class="w-full overflow-hidden mandala-accent" style="background: linear-gradient(135deg, #FFF4E6 0%, #E8F5E9 100%);">
+     <div class="max-w-7xl mx-auto px-4 py-8">
+      <div class="relative h-96 overflow-hidden rounded-2xl shadow-2xl">
+       <div class="flex hero-slider" style="width: 300%;"><!-- Slide 1 - Diwali Festival Theme -->
+        <div class="w-1/3 h-96 flex items-center justify-center px-12 ikat-pattern" style="background: linear-gradient(135deg, #FF9933 0%, #FFB366 100%);">
+         <div class="text-white text-center">
+          <div class="mb-4 diya-flicker text-7xl">
+           🪔
+          </div>
+          <h2 id="hero-offer-1" class="text-6xl font-extrabold mb-4 drop-shadow-lg">Great Indian Festival</h2>
+          <p class="text-3xl mb-8 font-medium">Up to 80% Off</p><button onclick="changePage('products')" class="btn-primary px-10 py-4 bg-white rounded-full font-bold text-xl shadow-2xl" style="color: #FF9933;"> Shop Now → </button>
+         </div>
+        </div><!-- Slide 2 - Daily Deals with Rangoli Pattern -->
+        <div class="w-1/3 h-96 flex items-center justify-center px-12 block-print-pattern" style="background: linear-gradient(135deg, #138808 0%, #1ea910 100%);">
+         <div class="text-white text-center">
+          <div class="mb-4 text-7xl">
+           🎁
+          </div>
+          <h2 id="hero-offer-2" class="text-6xl font-extrabold mb-4 drop-shadow-lg">Daily Deals</h2>
+          <p class="text-3xl mb-8 font-medium">New Offers Every Day</p><button onclick="changePage('products')" class="btn-primary px-10 py-4 bg-white rounded-full font-bold text-xl shadow-2xl" style="color: #138808;"> Explore Deals → </button>
+         </div>
+        </div><!-- Slide 3 - Free Delivery with Gold Theme -->
+        <div class="w-1/3 h-96 flex items-center justify-center px-12 mandala-accent" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);">
+         <div class="text-white text-center">
+          <div class="mb-4 text-7xl">
+           🚚
+          </div>
+          <h2 id="hero-offer-3" class="text-6xl font-extrabold mb-4 drop-shadow-lg">Free Delivery</h2>
+          <p class="text-3xl mb-8 font-medium">On Orders Above ₹499</p><button onclick="changePage('products')" class="btn-primary px-10 py-4 bg-white rounded-full font-bold text-xl shadow-2xl" style="color: #FFA500;"> Start Shopping → </button>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Category Grid with Indian Art Style Icons -->
+    <section class="max-w-7xl mx-auto px-4 py-10">
+     <h2 class="text-4xl font-bold mb-8" style="color: #333;">Shop by Category</h2>
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-6"><button onclick="changePage('products')" class="category-item product-card bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl">
+       <div class="w-28 h-28 mx-auto mb-5 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #FFF4E6 0%, #FFE6CC 100%);">
+        <svg class="category-icon" width="56" height="56" viewbox="0 0 56 56" fill="none"><rect x="10" y="16" width="36" height="28" rx="3" stroke="#FF9933" stroke-width="2.5" /> <rect x="18" y="22" width="20" height="14" fill="#FF9933" opacity="0.25" /> <circle cx="28" cy="29" r="4" fill="#FF9933" /> <path d="M10 24 L46 24" stroke="#FF9933" stroke-width="2" />
+        </svg>
+       </div><h3 class="font-bold text-xl mb-2" style="color: #333;">Electronics</h3><p class="text-sm" style="color: #666;">Latest Gadgets &amp; Devices</p></button> <button onclick="changePage('products')" class="category-item product-card bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl">
+       <div class="w-28 h-28 mx-auto mb-5 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);">
+        <svg class="category-icon" width="56" height="56" viewbox="0 0 56 56" fill="none"><path d="M20 16 L20 40 M36 16 L36 40 M14 22 L42 22 M14 34 L42 34" stroke="#138808" stroke-width="2.5" /> <rect x="24" y="24" width="8" height="8" fill="#138808" opacity="0.3" /> <circle cx="28" cy="28" r="2" fill="#138808" />
+        </svg>
+       </div><h3 class="font-bold text-xl mb-2" style="color: #333;">Fashion</h3><p class="text-sm" style="color: #666;">Ethnic &amp; Western Wear</p></button> <button onclick="changePage('products')" class="category-item product-card bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl">
+       <div class="w-28 h-28 mx-auto mb-5 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #FFF4E6 0%, #FFE6CC 100%);">
+        <svg class="category-icon" width="56" height="56" viewbox="0 0 56 56" fill="none"><rect x="12" y="22" width="32" height="24" rx="2" stroke="#FF9933" stroke-width="2.5" /> <path d="M12 30 L44 30 M18 22 L18 12 L38 12 L38 22" stroke="#FF9933" stroke-width="2.5" /> <circle cx="28" cy="35" r="3" fill="#FF9933" opacity="0.4" />
+        </svg>
+       </div><h3 class="font-bold text-xl mb-2" style="color: #333;">Home &amp; Kitchen</h3><p class="text-sm" style="color: #666;">Decor &amp; Appliances</p></button> <button onclick="changePage('products')" class="category-item product-card bg-white rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl">
+       <div class="w-28 h-28 mx-auto mb-5 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);">
+        <svg class="category-icon" width="56" height="56" viewbox="0 0 56 56" fill="none"><path d="M14 32 L14 42 L42 42 L42 32 M28 14 L28 32 M20 22 L28 14 L36 22" stroke="#138808" stroke-width="2.5" stroke-linecap="round" /> <circle cx="28" cy="32" r="5" stroke="#138808" stroke-width="2.5" /> <path d="M28 32 L28 37" stroke="#138808" stroke-width="2" stroke-linecap="round" />
+        </svg>
+       </div><h3 class="font-bold text-xl mb-2" style="color: #333;">Grocery</h3><p class="text-sm" style="color: #666;">Fresh &amp; Daily Essentials</p></button>
+     </div>
+    </section><!-- Best Sellers Section -->
+    <section class="max-w-7xl mx-auto px-4 py-10">
+     <div class="flex items-center justify-between mb-8">
+      <h2 class="text-4xl font-bold" style="color: #333;">🏆 Best Sellers</h2><button onclick="changePage('products')" class="text-orange-600 font-bold text-lg hover:underline hover:text-orange-700 transition-colors"> View All → </button>
+     </div>
+     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6"><!-- Product Card 1 -->
+      <div onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+       <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+        <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><rect x="20" y="28" width="60" height="44" rx="4" stroke="#FF9933" stroke-width="3" /> <rect x="32" y="38" width="36" height="24" fill="#FF9933" opacity="0.2" /> <circle cx="50" cy="50" r="8" fill="#138808" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Premium Wireless Earbuds Pro with Noise Cancellation</h3>
+        <div class="flex items-center mb-3"><span class="star-filled text-base">★★★★☆</span> <span class="text-xs ml-2" style="color: #666;">(1,234)</span>
+        </div>
+        <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹1,999</span> <span class="text-sm line-through" style="color: #999;">₹3,999</span>
+        </div>
+        <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹2,000 (50%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #FFF4E6; color: #FF9933;">Free Delivery</span>
+       </div>
+      </div><!-- Product Card 2 -->
+      <div onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+       <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+        <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><path d="M30 35 L30 65 M40 35 L40 65 M50 35 L50 65 M60 35 L60 65 M70 35 L70 65" stroke="#138808" stroke-width="2.5" /> <rect x="38" y="43" width="24" height="14" fill="#138808" opacity="0.3" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Designer Cotton Kurta Set with Dupatta</h3>
+        <div class="flex items-center mb-3"><span class="star-filled text-base">★★★★★</span> <span class="text-xs ml-2" style="color: #666;">(856)</span>
+        </div>
+        <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹899</span> <span class="text-sm line-through" style="color: #999;">₹1,499</span>
+        </div>
+        <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹600 (40%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #E8F5E9; color: #138808;">Best Seller</span>
+       </div>
+      </div><!-- Product Card 3 -->
+      <div onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+       <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+        <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><rect x="25" y="38" width="50" height="36" rx="3" stroke="#FF9933" stroke-width="3" /> <path d="M25 50 L75 50" stroke="#FF9933" stroke-width="2.5" /> <circle cx="50" cy="60" r="6" fill="#138808" opacity="0.4" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Non-Stick Cookware Set - 7 Pieces</h3>
+        <div class="flex items-center mb-3"><span class="star-filled text-base">★★★★☆</span> <span class="text-xs ml-2" style="color: #666;">(2,145)</span>
+        </div>
+        <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹2,499</span> <span class="text-sm line-through" style="color: #999;">₹4,999</span>
+        </div>
+        <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹2,500 (50%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #FFF4E6; color: #FF9933;">Limited Stock</span>
+       </div>
+      </div><!-- Product Card 4 -->
+      <div onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+       <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+        <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="25" stroke="#138808" stroke-width="3" /> <path d="M50 30 L50 50 L65 58" stroke="#138808" stroke-width="3" stroke-linecap="round" /> <circle cx="50" cy="50" r="3" fill="#138808" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Fitness Smart Watch Series 5 with Heart Monitor</h3>
+        <div class="flex items-center mb-3"><span class="star-filled text-base">★★★★★</span> <span class="text-xs ml-2" style="color: #666;">(3,421)</span>
+        </div>
+        <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹3,999</span> <span class="text-sm line-through" style="color: #999;">₹7,999</span>
+        </div>
+        <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹4,000 (50%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #E8F5E9; color: #138808;">Trending</span>
+       </div>
+      </div><!-- Product Card 5 -->
+      <div onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer">
+       <div class="h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+        <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><path d="M35 50 L50 30 L65 50 L50 70 Z" stroke="#FF9933" stroke-width="3" fill="none" /> <circle cx="50" cy="50" r="8" fill="#138808" /> <path d="M35 50 L50 50 M50 30 L50 50" stroke="#FF9933" stroke-width="2" />
+        </svg>
+       </div>
+       <div class="p-5">
+        <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Premium Basmati Rice 5kg - India Gate</h3>
+        <div class="flex items-center mb-3"><span class="star-filled text-base">★★★★☆</span> <span class="text-xs ml-2" style="color: #666;">(5,678)</span>
+        </div>
+        <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹499</span> <span class="text-sm line-through" style="color: #999;">₹699</span>
+        </div>
+        <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹200 (29%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #FFF4E6; color: #FF9933;">Free Delivery</span>
+       </div>
+      </div>
+     </div>
+    </section><!-- Today's Lightning Deals -->
+    <section class="max-w-7xl mx-auto px-4 py-10">
+     <div class="rounded-3xl p-10 ikat-pattern shadow-2xl" style="background: linear-gradient(135deg, #FF9933 0%, #FFB366 100%); border: 4px solid #FFD700;">
+      <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+       <div class="flex items-center space-x-4 mb-4 md:mb-0"><span class="text-6xl diya-flicker">⚡</span>
+        <h2 class="text-5xl font-extrabold text-white drop-shadow-lg">Today's Lightning Deals</h2>
+       </div>
+       <div class="text-center">
+        <div class="text-lg font-semibold text-white mb-2">
+         Ends in:
+        </div>
+        <div class="timer-glow text-4xl font-bold text-white">
+         05:23:45
+        </div>
+       </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+       <div class="bg-white rounded-2xl p-6 text-center shadow-xl hover:scale-105 transition-transform">
+        <div class="text-5xl font-extrabold mb-3" style="color: #FF9933;">
+         50% OFF
+        </div>
+        <p class="font-bold text-lg" style="color: #333;">Electronics</p>
+        <p class="text-sm mt-2" style="color: #666;">2,345 deals</p>
+       </div>
+       <div class="bg-white rounded-2xl p-6 text-center shadow-xl hover:scale-105 transition-transform">
+        <div class="text-5xl font-extrabold mb-3" style="color: #138808;">
+         Buy 2 Get 1
+        </div>
+        <p class="font-bold text-lg" style="color: #333;">Fashion</p>
+        <p class="text-sm mt-2" style="color: #666;">1,890 deals</p>
+       </div>
+       <div class="bg-white rounded-2xl p-6 text-center shadow-xl hover:scale-105 transition-transform">
+        <div class="text-5xl font-extrabold mb-3" style="color: #FF9933;">
+         ₹199
+        </div>
+        <p class="font-bold text-lg" style="color: #333;">Home Decor</p>
+        <p class="text-sm mt-2" style="color: #666;">890 deals</p>
+       </div>
+       <div class="bg-white rounded-2xl p-6 text-center shadow-xl hover:scale-105 transition-transform">
+        <div class="text-5xl font-extrabold mb-3" style="color: #138808;">
+         Free Ship
+        </div>
+        <p class="font-bold text-lg" style="color: #333;">All Orders</p>
+        <p class="text-sm mt-2" style="color: #666;">No minimum</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- Frequently Repurchased -->
+    <section class="max-w-7xl mx-auto px-4 py-10">
+     <h2 class="text-4xl font-bold mb-8" style="color: #333;">🔄 Frequently Repurchased</h2>
+     <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+      <div class="bg-white rounded-xl shadow-lg p-5 text-center hover:shadow-2xl transition-shadow cursor-pointer">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center"><span class="text-4xl">🍚</span>
+       </div>
+       <h3 class="font-semibold mb-2" style="color: #333;">Rice &amp; Grains</h3>
+       <p class="text-sm" style="color: #138808;">Starting ₹99</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg p-5 text-center hover:shadow-2xl transition-shadow cursor-pointer">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center"><span class="text-4xl">🥛</span>
+       </div>
+       <h3 class="font-semibold mb-2" style="color: #333;">Dairy Products</h3>
+       <p class="text-sm" style="color: #138808;">Starting ₹49</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg p-5 text-center hover:shadow-2xl transition-shadow cursor-pointer">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center"><span class="text-4xl">🍞</span>
+       </div>
+       <h3 class="font-semibold mb-2" style="color: #333;">Bakery</h3>
+       <p class="text-sm" style="color: #138808;">Starting ₹25</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg p-5 text-center hover:shadow-2xl transition-shadow cursor-pointer">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center"><span class="text-4xl">🧴</span>
+       </div>
+       <h3 class="font-semibold mb-2" style="color: #333;">Personal Care</h3>
+       <p class="text-sm" style="color: #138808;">Starting ₹79</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg p-5 text-center hover:shadow-2xl transition-shadow cursor-pointer">
+       <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center"><span class="text-4xl">🧹</span>
+       </div>
+       <h3 class="font-semibold mb-2" style="color: #333;">Cleaning</h3>
+       <p class="text-sm" style="color: #138808;">Starting ₹59</p>
+      </div>
+     </div>
+    </section>
+   </div><!-- PRODUCT LISTING PAGE -->
+   <div id="page-products" class="page-content hidden">
+    <div class="max-w-7xl mx-auto px-4 py-6"><!-- Breadcrumb -->
+     <div class="mb-6 flex items-center space-x-2 text-sm"><button onclick="changePage('home')" class="hover:text-orange-600" style="color: #666;">Home</button> <span style="color: #999;">›</span> <span style="color: #333;" class="font-semibold">All Products</span>
+     </div>
+     <div class="flex gap-6"><!-- Filters Sidebar (Amazon-style) -->
+      <aside class="w-72 flex-shrink-0 hidden md:block">
+       <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+        <h3 class="text-2xl font-bold mb-6 pb-3 border-b-2" style="color: #333; border-color: #FF9933;">Filters</h3><!-- Category Filter -->
+        <div class="mb-8">
+         <h4 class="font-bold text-lg mb-4" style="color: #333;">Category</h4>
+         <div class="space-y-3"><label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">Electronics</span> <span class="ml-auto text-xs" style="color: #999;">(1,234)</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">Fashion</span> <span class="ml-auto text-xs" style="color: #999;">(2,456)</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">Home &amp; Kitchen</span> <span class="ml-auto text-xs" style="color: #999;">(890)</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">Grocery</span> <span class="ml-auto text-xs" style="color: #999;">(3,567)</span> </label>
+         </div>
+        </div><!-- Price Range Filter -->
+        <div class="mb-8 pb-6 border-b">
+         <h4 class="font-bold text-lg mb-4" style="color: #333;">Price Range</h4>
+         <div class="space-y-3"><label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">Under ₹500</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">₹500 - ₹1,000</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">₹1,000 - ₹5,000</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">Over ₹5,000</span> </label>
+         </div>
+        </div><!-- Rating Filter -->
+        <div class="mb-8 pb-6 border-b">
+         <h4 class="font-bold text-lg mb-4" style="color: #333;">Customer Rating</h4>
+         <div class="space-y-3"><label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span class="star-filled">★★★★★</span> <span style="color: #666;">&amp; up</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span class="star-filled">★★★★</span> <span style="color: #999;">☆</span> <span style="color: #666;">&amp; up</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span class="star-filled">★★★</span> <span style="color: #999;">☆☆</span> <span style="color: #666;">&amp; up</span> </label>
+         </div>
+        </div><!-- Discount Filter -->
+        <div class="mb-6">
+         <h4 class="font-bold text-lg mb-4" style="color: #333;">Discount</h4>
+         <div class="space-y-3"><label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">50% or more</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">40% or more</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">30% or more</span> </label> <label class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors"> <input type="checkbox" class="filter-checkbox w-5 h-5 rounded"> <span style="color: #666;">20% or more</span> </label>
+         </div>
+        </div>
+       </div>
+      </aside><!-- Product Grid -->
+      <div class="flex-1"><!-- Sort Bar -->
+       <div class="bg-white rounded-2xl shadow-md p-5 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="font-semibold text-lg" style="color: #333;">
+         Showing <span style="color: #FF9933;">1-20</span> of <span style="color: #FF9933;">1,234</span> results
+        </div>
+        <div class="flex items-center space-x-3"><label for="sort-select" class="font-medium" style="color: #666;">Sort by:</label> <select id="sort-select" class="px-5 py-2 border-2 rounded-lg font-medium focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #FF9933;"> <option>Relevance</option> <option>Price: Low to High</option> <option>Price: High to Low</option> <option>Customer Rating</option> <option>Newest First</option> <option>Discount: High to Low</option> </select>
+        </div>
+       </div><!-- Product Grid -->
+       <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"><!-- Sample Products --> <button onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden text-left">
+         <div class="relative h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+          <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><rect x="20" y="28" width="60" height="44" rx="4" stroke="#FF9933" stroke-width="3" /> <rect x="32" y="38" width="36" height="24" fill="#FF9933" opacity="0.2" /> <circle cx="50" cy="50" r="8" fill="#138808" />
+          </svg><span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white" style="background-color: #FF9933;">-50%</span>
+         </div>
+         <div class="p-5">
+          <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Premium Bluetooth Speaker with Bass Boost Technology</h3>
+          <div class="flex items-center mb-3"><span class="star-filled text-sm">★★★★☆</span> <span class="text-xs ml-2" style="color: #666;">(1,234)</span>
+          </div>
+          <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹2,499</span> <span class="text-sm line-through" style="color: #999;">₹4,999</span>
+          </div>
+          <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹2,500 (50%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #FFF4E6; color: #FF9933;">Free Delivery</span>
+         </div></button> <button onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden text-left">
+         <div class="relative h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+          <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><path d="M30 35 L30 65 M40 35 L40 65 M50 35 L50 65 M60 35 L60 65 M70 35 L70 65" stroke="#138808" stroke-width="2.5" /> <rect x="38" y="43" width="24" height="14" fill="#138808" opacity="0.3" />
+          </svg><span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white" style="background-color: #138808;">-46%</span>
+         </div>
+         <div class="p-5">
+          <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Designer Silk Saree with Blouse Piece - Traditional</h3>
+          <div class="flex items-center mb-3"><span class="star-filled text-sm">★★★★★</span> <span class="text-xs ml-2" style="color: #666;">(856)</span>
+          </div>
+          <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹1,899</span> <span class="text-sm line-through" style="color: #999;">₹3,499</span>
+          </div>
+          <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹1,600 (46%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #E8F5E9; color: #138808;">Best Seller</span>
+         </div></button> <button onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden text-left">
+         <div class="relative h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+          <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="25" stroke="#138808" stroke-width="3" /> <path d="M50 30 L50 50 L65 58" stroke="#138808" stroke-width="3" stroke-linecap="round" />
+          </svg><span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white" style="background-color: #FF9933;">-50%</span>
+         </div>
+         <div class="p-5">
+          <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Fitness Smart Watch with Heart Rate &amp; Sleep Monitor</h3>
+          <div class="flex items-center mb-3"><span class="star-filled text-sm">★★★★☆</span> <span class="text-xs ml-2" style="color: #666;">(3,421)</span>
+          </div>
+          <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹3,999</span> <span class="text-sm line-through" style="color: #999;">₹7,999</span>
+          </div>
+          <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹4,000 (50%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #FFF4E6; color: #FF9933;">Limited Stock</span>
+         </div></button> <button onclick="changePage('product-detail')" class="product-card bg-white rounded-xl shadow-lg overflow-hidden text-left">
+         <div class="relative h-56 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+          <svg width="100" height="100" viewbox="0 0 100 100" fill="none"><rect x="25" y="38" width="50" height="36" rx="3" stroke="#FF9933" stroke-width="3" /> <path d="M25 50 L75 50" stroke="#FF9933" stroke-width="2.5" />
+          </svg><span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white" style="background-color: #138808;">-57%</span>
+         </div>
+         <div class="p-5">
+          <h3 class="font-semibold mb-2 line-clamp-2 text-base" style="color: #333;">Wooden Wall Mounted Decorative Shelf Set - Brown</h3>
+          <div class="flex items-center mb-3"><span class="star-filled text-sm">★★★★★</span> <span class="text-xs ml-2" style="color: #666;">(2,145)</span>
+          </div>
+          <div class="flex items-center space-x-2 mb-2"><span class="text-2xl font-bold" style="color: #FF9933;">₹1,299</span> <span class="text-sm line-through" style="color: #999;">₹2,999</span>
+          </div>
+          <p class="text-sm font-semibold mb-3" style="color: #138808;">Save ₹1,700 (57%)</p><span class="inline-block px-3 py-1 text-xs font-semibold rounded-full" style="background-color: #E8F5E9; color: #138808;">Free Delivery</span>
+         </div></button>
+       </div><!-- Pagination -->
+       <div class="mt-10 flex justify-center items-center space-x-2"><button class="px-4 py-2 rounded-lg border-2 font-semibold hover:bg-gray-50 transition-colors" style="border-color: #ddd; color: #666;"> ‹ Previous </button> <button class="px-4 py-2 rounded-lg font-semibold text-white" style="background-color: #FF9933;">1</button> <button class="px-4 py-2 rounded-lg border-2 font-semibold hover:bg-gray-50 transition-colors" style="border-color: #ddd; color: #666;">2</button> <button class="px-4 py-2 rounded-lg border-2 font-semibold hover:bg-gray-50 transition-colors" style="border-color: #ddd; color: #666;">3</button> <button class="px-4 py-2 rounded-lg border-2 font-semibold hover:bg-gray-50 transition-colors" style="border-color: #ddd; color: #666;">4</button> <button class="px-4 py-2 rounded-lg border-2 font-semibold hover:bg-gray-50 transition-colors" style="border-color: #ddd; color: #666;">5</button> <button class="px-4 py-2 rounded-lg border-2 font-semibold hover:bg-gray-50 transition-colors" style="border-color: #ddd; color: #666;"> Next › </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- PRODUCT DETAIL PAGE -->
+   <div id="page-product-detail" class="page-content hidden">
+    <div class="max-w-7xl mx-auto px-4 py-6"><!-- Breadcrumb -->
+     <div class="mb-6 flex items-center space-x-2 text-sm"><button onclick="changePage('home')" class="hover:text-orange-600" style="color: #666;">Home</button> <span style="color: #999;">›</span> <button onclick="changePage('products')" class="hover:text-orange-600" style="color: #666;">Products</button> <span style="color: #999;">›</span> <span style="color: #333;" class="font-semibold">Premium Bluetooth Speaker</span>
+     </div>
+     <div class="bg-white rounded-2xl shadow-xl p-8">
+      <div class="grid md:grid-cols-2 gap-10"><!-- Image Gallery -->
+       <div>
+        <div class="h-96 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl mb-4 flex items-center justify-center shadow-inner border-2 border-gray-200">
+         <svg width="240" height="240" viewbox="0 0 240 240" fill="none"><rect x="40" y="60" width="160" height="120" rx="8" stroke="#FF9933" stroke-width="4" /> <rect x="70" y="85" width="100" height="70" fill="#FF9933" opacity="0.2" /> <circle cx="120" cy="120" r="20" fill="#138808" /> <circle cx="120" cy="120" r="12" fill="#FF9933" />
+         </svg>
+        </div>
+        <div class="grid grid-cols-4 gap-3">
+         <div class="gallery-thumb h-24 bg-gray-100 rounded-lg border-2 border-orange-500"></div>
+         <div class="gallery-thumb h-24 bg-gray-100 rounded-lg border-2 border-gray-300"></div>
+         <div class="gallery-thumb h-24 bg-gray-100 rounded-lg border-2 border-gray-300"></div>
+         <div class="gallery-thumb h-24 bg-gray-100 rounded-lg border-2 border-gray-300"></div>
+        </div>
+       </div><!-- Product Info -->
+       <div>
+        <h1 class="text-4xl font-bold mb-4" style="color: #333;">Premium Bluetooth Speaker with Bass Boost Technology</h1>
+        <div class="flex items-center mb-5"><span class="star-filled text-xl">★★★★☆</span> <span class="ml-3 text-lg font-semibold" style="color: #333;">4.2 out of 5</span> <span class="ml-3 text-lg" style="color: #666;">(1,234 ratings)</span>
+        </div>
+        <div class="mb-6 pb-6 border-b-2">
+         <div class="flex items-center space-x-4 mb-3"><span class="text-5xl font-extrabold" style="color: #FF9933;">₹2,499</span> <span class="text-3xl line-through" style="color: #999;">₹4,999</span> <span class="px-4 py-2 rounded-lg text-white font-bold text-xl" style="background-color: #138808;">50% OFF</span>
+         </div>
+         <p class="text-xl font-bold" style="color: #138808;">You Save: ₹2,500</p>
+         <p class="text-base mt-2" style="color: #666;">Inclusive of all taxes | FREE Delivery</p>
+        </div>
+        <div class="mb-6">
+         <h3 class="font-bold text-xl mb-4" style="color: #333;">Key Features:</h3>
+         <ul class="space-y-3" style="color: #666;">
+          <li class="flex items-start"><span class="mr-3 text-xl" style="color: #FF9933;">✓</span> <span class="text-base">Premium sound quality with enhanced bass boost</span></li>
+          <li class="flex items-start"><span class="mr-3 text-xl" style="color: #FF9933;">✓</span> <span class="text-base">Bluetooth 5.0 connectivity with 10m range</span></li>
+          <li class="flex items-start"><span class="mr-3 text-xl" style="color: #FF9933;">✓</span> <span class="text-base">12 hours battery life on single charge</span></li>
+          <li class="flex items-start"><span class="mr-3 text-xl" style="color: #FF9933;">✓</span> <span class="text-base">Water resistant IPX5 rating - Perfect for outdoors</span></li>
+          <li class="flex items-start"><span class="mr-3 text-xl" style="color: #FF9933;">✓</span> <span class="text-base">Built-in microphone for hands-free calls</span></li>
+          <li class="flex items-start"><span class="mr-3 text-xl" style="color: #FF9933;">✓</span> <span class="text-base">Compact and portable design with carry handle</span></li>
+         </ul>
+        </div>
+        <div class="mb-6"><label class="block font-bold text-lg mb-3" style="color: #333;">Select Color:</label>
+         <div class="flex gap-3"><button class="w-14 h-14 rounded-full border-4 border-orange-500 shadow-lg hover:scale-110 transition-transform" style="background-color: #000;"></button> <button class="w-14 h-14 rounded-full border-3 border-gray-300 shadow-lg hover:scale-110 transition-transform" style="background-color: #FF9933;"></button> <button class="w-14 h-14 rounded-full border-3 border-gray-300 shadow-lg hover:scale-110 transition-transform" style="background-color: #138808;"></button> <button class="w-14 h-14 rounded-full border-3 border-gray-300 shadow-lg hover:scale-110 transition-transform" style="background-color: #fff;"></button>
+         </div>
+        </div>
+        <div class="mb-8"><label class="block font-bold text-lg mb-3" style="color: #333;">Quantity:</label>
+         <div class="flex items-center space-x-4"><button class="quantity-btn w-12 h-12 rounded-lg border-3 flex items-center justify-center font-bold text-xl" style="border-color: #FF9933;">-</button> <span class="text-2xl font-bold" style="color: #333;">1</span> <button class="quantity-btn w-12 h-12 rounded-lg border-3 flex items-center justify-center font-bold text-xl" style="border-color: #FF9933;">+</button>
+         </div>
+        </div>
+        <div class="flex gap-4 mb-8"><button onclick="addToCart()" class="btn-primary flex-1 py-5 rounded-xl text-white font-bold text-xl shadow-xl" style="background-color: #FF9933;"> 🛒 Add to Cart </button> <button onclick="buyNow()" class="btn-secondary flex-1 py-5 rounded-xl text-white font-bold text-xl shadow-xl" style="background-color: #138808;"> ⚡ Buy Now </button>
+        </div>
+        <div class="grid grid-cols-3 gap-4 p-6 rounded-xl ikat-pattern" style="background-color: #FFF4E6;">
+         <div class="text-center">
+          <div class="font-bold text-lg mb-1" style="color: #FF9933;">
+           🚚 Free Delivery
+          </div>
+          <div class="text-sm" style="color: #666;">
+           On all orders
+          </div>
+         </div>
+         <div class="text-center border-x-2" style="border-color: rgba(255, 153, 51, 0.3);">
+          <div class="font-bold text-lg mb-1" style="color: #FF9933;">
+           ↩️ 7 Days Return
+          </div>
+          <div class="text-sm" style="color: #666;">
+           Easy returns
+          </div>
+         </div>
+         <div class="text-center">
+          <div class="font-bold text-lg mb-1" style="color: #FF9933;">
+           🛡️ 1 Year Warranty
+          </div>
+          <div class="text-sm" style="color: #666;">
+           Manufacturer
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Product Description -->
+      <div class="mt-10 pt-10 border-t-2">
+       <h2 class="text-3xl font-bold mb-6" style="color: #333;">Product Description</h2>
+       <div class="text-lg leading-relaxed" style="color: #666;">
+        <p class="mb-5">Experience superior audio quality with our Premium Bluetooth Speaker featuring advanced bass boost technology. Perfect for parties, outdoor adventures, or enjoying your favorite music at home, this speaker delivers crystal-clear sound with deep, rich bass that brings your music to life.</p>
+        <p class="mb-5">Engineered with premium components and featuring a sleek, modern design, this speaker combines style with functionality. The long-lasting 12-hour battery ensures hours of uninterrupted entertainment, while the IPX5 water-resistant rating means you can take it anywhere without worry.</p>
+        <p>With Bluetooth 5.0 connectivity, you get a stable connection up to 10 meters away, and the built-in microphone lets you take calls hands-free. The compact, portable design with an integrated carry handle makes it easy to take your music wherever you go.</p>
+       </div>
+      </div><!-- Specifications -->
+      <div class="mt-10 pt-10 border-t-2">
+       <h2 class="text-3xl font-bold mb-6" style="color: #333;">Technical Specifications</h2>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Brand</span> <span style="color: #666;">Premium Audio</span>
+         </div>
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Model</span> <span style="color: #666;">BT-5000 Pro</span>
+         </div>
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Connectivity</span> <span style="color: #666;">Bluetooth 5.0</span>
+         </div>
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Battery Life</span> <span style="color: #666;">12 Hours</span>
+         </div>
+        </div>
+        <div class="space-y-4">
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Water Resistance</span> <span style="color: #666;">IPX5</span>
+         </div>
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Range</span> <span style="color: #666;">10 Meters</span>
+         </div>
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Charging Time</span> <span style="color: #666;">3 Hours</span>
+         </div>
+         <div class="flex justify-between py-3 border-b"><span class="font-semibold" style="color: #333;">Weight</span> <span style="color: #666;">680g</span>
+         </div>
+        </div>
+       </div>
+      </div><!-- Customer Reviews -->
+      <div class="mt-10 pt-10 border-t-2">
+       <h2 class="text-3xl font-bold mb-8" style="color: #333;">Customer Reviews</h2>
+       <div class="space-y-6">
+        <div class="p-6 rounded-xl shadow-md" style="background-color: #f9f9f9;">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center"><span class="star-filled text-lg">★★★★★</span> <span class="ml-3 font-bold text-lg" style="color: #333;">Excellent Sound Quality!</span>
+          </div><span class="text-sm" style="color: #999;">2 days ago</span>
+         </div>
+         <p class="text-base mb-3" style="color: #666;">The bass is absolutely amazing and the battery life is exactly as advertised. I've been using it for outdoor parties and everyone is impressed with the sound quality. Highly recommend!</p>
+         <p class="text-sm font-semibold" style="color: #666;">- Rajesh Kumar, <span style="color: #138808;">Verified Purchase ✓</span></p>
+        </div>
+        <div class="p-6 rounded-xl shadow-md" style="background-color: #f9f9f9;">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center"><span class="star-filled text-lg">★★★★☆</span> <span class="ml-3 font-bold text-lg" style="color: #333;">Great value for money</span>
+          </div><span class="text-sm" style="color: #999;">1 week ago</span>
+         </div>
+         <p class="text-base mb-3" style="color: #666;">Very good speaker at this price point. Sound quality is impressive and it's very portable. Only minor issue is the charging cable could be longer, but that's not a big deal.</p>
+         <p class="text-sm font-semibold" style="color: #666;">- Priya Sharma, <span style="color: #138808;">Verified Purchase ✓</span></p>
+        </div>
+        <div class="p-6 rounded-xl shadow-md" style="background-color: #f9f9f9;">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center"><span class="star-filled text-lg">★★★★★</span> <span class="ml-3 font-bold text-lg" style="color: #333;">Perfect for outdoor use</span>
+          </div><span class="text-sm" style="color: #999;">2 weeks ago</span>
+         </div>
+         <p class="text-base mb-3" style="color: #666;">I take this speaker everywhere - hiking, beach trips, picnics. The water resistance works great and it's survived a few splashes. Battery easily lasts the whole day. Love it!</p>
+         <p class="text-sm font-semibold" style="color: #666;">- Amit Patel, <span style="color: #138808;">Verified Purchase ✓</span></p>
+        </div>
+       </div><button class="mt-8 px-8 py-3 border-2 rounded-xl font-bold hover:bg-gray-50 transition-colors" style="border-color: #FF9933; color: #FF9933;"> See All Reviews → </button>
+      </div>
+     </div>
+    </div>
+   </div><!-- SHOPPING CART PAGE -->
+   <div id="page-cart" class="page-content hidden">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+     <h1 class="text-4xl font-bold mb-8" style="color: #333;">Shopping Cart</h1>
+     <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+       <div id="cart-items" class="space-y-4"><!-- Empty Cart State -->
+        <div class="bg-white rounded-2xl shadow-lg p-12 text-center">
+         <svg class="mx-auto mb-6" width="120" height="120" viewbox="0 0 120 120" fill="none"><path d="M20 20 L30 20 L40 70 L95 70 L105 30 L40 30" stroke="#FF9933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /> <circle cx="48" cy="88" r="7" fill="#FF9933" /> <circle cx="87" cy="88" r="7" fill="#FF9933" /> <line x1="50" y1="50" x2="85" y2="50" stroke="#FF9933" stroke-width="2" opacity="0.3" />
+         </svg>
+         <h3 class="text-3xl font-bold mb-4" style="color: #333;">Your cart is empty</h3>
+         <p class="text-lg mb-8" style="color: #666;">Add items to your cart to see them here</p><button onclick="changePage('products')" class="btn-primary px-10 py-4 rounded-xl text-white font-bold text-lg" style="background-color: #FF9933;"> Start Shopping </button>
+        </div>
+       </div>
+      </div><!-- Price Summary -->
+      <div>
+       <div class="bg-white rounded-2xl shadow-lg p-8 sticky top-24">
+        <h2 class="text-2xl font-bold mb-6 pb-4 border-b-2" style="color: #333; border-color: #FF9933;">Price Details</h2>
+        <div class="space-y-4 mb-6 pb-6 border-b">
+         <div class="flex justify-between text-lg"><span style="color: #666;">Price (0 items)</span> <span style="color: #333;">₹0</span>
+         </div>
+         <div class="flex justify-between text-lg"><span style="color: #666;">Discount</span> <span class="font-semibold" style="color: #138808;">- ₹0</span>
+         </div>
+         <div class="flex justify-between text-lg"><span style="color: #666;">Delivery Charges</span> <span class="font-semibold" style="color: #138808;">FREE</span>
+         </div>
+        </div>
+        <div class="flex justify-between text-2xl font-bold mb-8"><span style="color: #333;">Total Amount</span> <span style="color: #FF9933;">₹0</span>
+        </div><button onclick="changePage('checkout')" class="w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg" style="background-color: #138808;" disabled> Proceed to Checkout </button>
+        <div class="mt-6 p-4 rounded-xl" style="background-color: #E8F5E9;">
+         <p class="text-base font-bold text-center" style="color: #138808;">💰 You will save ₹0 on this order</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- CHECKOUT PAGE -->
+   <div id="page-checkout" class="page-content hidden">
+    <div class="max-w-6xl mx-auto px-4 py-6">
+     <h1 class="text-4xl font-bold mb-8" style="color: #333;">🔒 Secure Checkout</h1>
+     <div class="grid lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2 space-y-8"><!-- Delivery Address -->
+       <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="flex items-center space-x-3 mb-6"><span class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style="background-color: #FF9933;">1</span>
+         <h2 class="text-2xl font-bold" style="color: #333;">Delivery Address</h2>
+        </div>
+        <form class="space-y-5" onsubmit="event.preventDefault();">
+         <div class="grid md:grid-cols-2 gap-5">
+          <div><label for="fname" class="block mb-2 font-semibold" style="color: #333;">First Name *</label> <input type="text" id="fname" class="w-full px-5 py-3 border-2 rounded-xl focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #ddd;" required>
+          </div>
+          <div><label for="lname" class="block mb-2 font-semibold" style="color: #333;">Last Name *</label> <input type="text" id="lname" class="w-full px-5 py-3 border-2 rounded-xl focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #ddd;" required>
+          </div>
+         </div>
+         <div><label for="address" class="block mb-2 font-semibold" style="color: #333;">Street Address *</label> <textarea id="address" rows="3" class="w-full px-5 py-3 border-2 rounded-xl focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #ddd;" required></textarea>
+         </div>
+         <div class="grid md:grid-cols-3 gap-5">
+          <div><label for="city" class="block mb-2 font-semibold" style="color: #333;">City *</label> <input type="text" id="city" class="w-full px-5 py-3 border-2 rounded-xl focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #ddd;" required>
+          </div>
+          <div><label for="state" class="block mb-2 font-semibold" style="color: #333;">State *</label> <select id="state" class="w-full px-5 py-3 border-2 rounded-xl focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #ddd;" required> <option value="">Select State</option> <option>Maharashtra</option> <option>Karnataka</option> <option>Delhi</option> <option>Tamil Nadu</option> <option>Gujarat</option> <option>West Bengal</option> <option>Rajasthan</option> </select>
+          </div>
+          <div><label for="pincode" class="block mb-2 font-semibold" style="color: #333;">Pincode *</label> <input type="text" id="pincode" class="w-full px-5 py-3 border-2 rounded-xl focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #ddd;" required>
+          </div>
+         </div>
+         <div><label for="phone" class="block mb-2 font-semibold" style="color: #333;">Phone Number *</label> <input type="tel" id="phone" class="w-full px-5 py-3 border-2 rounded-xl focus:outline-none focus:border-orange-500 transition-colors" style="border-color: #ddd;" required>
+         </div>
+        </form>
+       </div><!-- Payment Method -->
+       <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="flex items-center space-x-3 mb-6"><span class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg" style="background-color: #FF9933;">2</span>
+         <h2 class="text-2xl font-bold" style="color: #333;">Payment Method</h2>
+        </div>
+        <div class="space-y-4"><label class="flex items-center p-5 border-3 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" style="border-color: #FF9933; background-color: #FFF4E6;"> <input type="radio" name="payment" value="upi" class="w-6 h-6" style="accent-color: #FF9933;" checked>
+          <div class="ml-4"><span class="font-bold text-lg" style="color: #333;">UPI / QR Code</span>
+           <p class="text-sm" style="color: #666;">Pay using Google Pay, PhonePe, Paytm &amp; more</p>
+          </div></label> <label class="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" style="border-color: #ddd;"> <input type="radio" name="payment" value="card" class="w-6 h-6" style="accent-color: #FF9933;">
+          <div class="ml-4"><span class="font-bold text-lg" style="color: #333;">Credit / Debit Card</span>
+           <p class="text-sm" style="color: #666;">Visa, Mastercard, Rupay &amp; American Express</p>
+          </div></label> <label class="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" style="border-color: #ddd;"> <input type="radio" name="payment" value="netbanking" class="w-6 h-6" style="accent-color: #FF9933;">
+          <div class="ml-4"><span class="font-bold text-lg" style="color: #333;">Net Banking</span>
+           <p class="text-sm" style="color: #666;">All major banks supported</p>
+          </div></label> <label class="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors" style="border-color: #ddd;"> <input type="radio" name="payment" value="cod" class="w-6 h-6" style="accent-color: #FF9933;">
+          <div class="ml-4"><span class="font-bold text-lg" style="color: #333;">Cash on Delivery (COD)</span>
+           <p class="text-sm" style="color: #666;">Pay when you receive the product</p>
+          </div></label>
+        </div>
+       </div>
+      </div><!-- Order Summary -->
+      <div>
+       <div class="bg-white rounded-2xl shadow-lg p-8 sticky top-24">
+        <h2 class="text-2xl font-bold mb-6 pb-4 border-b-2" style="color: #333; border-color: #FF9933;">Order Summary</h2>
+        <div class="space-y-4 mb-6 pb-6 border-b">
+         <div class="flex justify-between text-lg"><span style="color: #666;">Items Total</span> <span style="color: #333;">₹0</span>
+         </div>
+         <div class="flex justify-between text-lg"><span style="color: #666;">Delivery</span> <span class="font-semibold" style="color: #138808;">FREE</span>
+         </div>
+         <div class="flex justify-between text-lg"><span style="color: #666;">You Saved</span> <span class="font-semibold" style="color: #138808;">₹0</span>
+         </div>
+        </div>
+        <div class="flex justify-between text-2xl font-bold mb-8"><span style="color: #333;">Total</span> <span style="color: #FF9933;">₹0</span>
+        </div><button onclick="placeOrder()" class="w-full py-5 rounded-xl text-white font-bold text-xl shadow-xl" style="background-color: #138808;"> Place Order </button>
+        <p class="text-sm text-center mt-6" style="color: #999;">By placing your order, you agree to GANESHA's <a href="#" class="underline" style="color: #FF9933;">terms and conditions</a></p>
+        <div class="mt-6 p-4 rounded-xl ikat-pattern" style="background-color: #E8F5E9;">
+         <p class="text-sm text-center font-semibold" style="color: #138808;">🔒 Safe &amp; Secure Payments</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </main><!-- Footer with Indian Languages -->
+  <footer class="w-full mt-16 border-t-4 indian-border" style="background-color: #2c2c2c; color: white;">
+   <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid md:grid-cols-4 gap-10 mb-10"><!-- Brand Column -->
+     <div>
+      <div class="flex items-center space-x-2 mb-5">
+       <svg width="48" height="48" viewbox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" fill="#FF9933" opacity="0.2" /> <path d="M24 10 C28 10 32 14 32 18 C32 22 28 26 24 26 M24 26 C20 26 16 22 16 18 C16 14 20 10 24 10" stroke="#FF9933" stroke-width="2" stroke-linecap="round" /> <path d="M24 26 Q22 30 20 32" stroke="#FF9933" stroke-width="2" stroke-linecap="round" /> <path d="M20 30 L28 30 M18 36 C18 36 20 32 24 32 C28 32 30 36 30 36" stroke="#FF9933" stroke-width="2" stroke-linecap="round" /> <ellipse cx="24" cy="16" rx="2" ry="2.5" fill="#138808" />
+       </svg>
+       <div>
+        <div class="text-2xl font-bold" style="color: #FF9933;">
+         GANESHA
+        </div>
+        <div class="text-xs font-semibold" style="color: #138808;">
+         .in
+        </div>
+       </div>
+      </div>
+      <p id="footer-about" class="text-base mb-5">India's trusted online marketplace for quality products at best prices</p>
+      <div class="flex space-x-3"><a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform" style="background-color: #FF9933;" aria-label="Facebook"> <span class="font-bold">f</span> </a> <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform" style="background-color: #FF9933;" aria-label="Twitter"> <span class="font-bold">𝕏</span> </a> <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform" style="background-color: #FF9933;" aria-label="Instagram"> <span class="font-bold">📷</span> </a> <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform" style="background-color: #FF9933;" aria-label="YouTube"> <span class="font-bold">▶</span> </a>
+      </div>
+     </div><!-- Shop Column -->
+     <div>
+      <h3 class="font-bold text-xl mb-5">Shop</h3>
+      <ul class="space-y-3 text-base">
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Electronics</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Fashion</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Home &amp; Kitchen</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Grocery</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Sports &amp; Fitness</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Today's Deals</a></li>
+      </ul>
+     </div><!-- Customer Service Column -->
+     <div>
+      <h3 class="font-bold text-xl mb-5">Customer Service</h3>
+      <ul class="space-y-3 text-base">
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Help Center</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Track Order</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Returns &amp; Refunds</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Shipping Info</a></li>
+       <li><a href="#" class="hover:text-orange-400 transition-colors">Report Issue</a></li>
+       <li id="customer-service" class="text-green-400 font-semibold">24/7 Customer Support</li>
+      </ul>
+     </div><!-- Language Options Column -->
+     <div>
+      <h3 class="font-bold text-xl mb-5">भाषा चुनें | Choose Language</h3>
+      <div class="grid grid-cols-2 gap-3 text-sm"><button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">English</button> <button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">हिंदी</button> <button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">தமிழ்</button> <button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">తెలుగు</button> <button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">ಕನ್ನಡ</button> <button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">മലയാളം</button> <button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">বাংলা</button> <button class="px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold" style="background-color: #3a3a3a;">ગુજરાતી</button>
+      </div>
+     </div>
+    </div><!-- Bottom Footer -->
+    <div class="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+     <p class="text-base mb-4 md:mb-0">© 2024 GANESHA.in - All Rights Reserved | Made with ❤️ in India</p>
+     <div class="flex space-x-6 text-base"><a href="#" class="hover:text-orange-400 transition-colors">Privacy Policy</a> <a href="#" class="hover:text-orange-400 transition-colors">Terms of Service</a> <a href="#" class="hover:text-orange-400 transition-colors">Security</a> <a href="#" class="hover:text-orange-400 transition-colors">Sitemap</a>
+     </div>
+    </div>
+   </div>
+  </footer><!-- Toast Notification -->
+  <div id="toast" class="toast-show fixed bottom-8 right-8 px-8 py-5 rounded-2xl shadow-2xl hidden transition-all z-50" style="background-color: #138808; color: white;">
+   <div class="flex items-center space-x-3"><span class="text-3xl">✓</span>
+    <p id="toast-message" class="font-bold text-lg"></p>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      site_tagline: "Divine Shopping Experience",
+      hero_offer_1: "Great Indian Festival",
+      hero_offer_2: "Daily Deals",
+      hero_offer_3: "Free Delivery",
+      footer_about: "India's trusted online marketplace for quality products at best prices",
+      customer_service: "24/7 Customer Support Available",
+      background_color: "#f5f5f5",
+      primary_color: "#FF9933",
+      secondary_color: "#138808",
+      text_color: "#333333",
+      card_background: "#ffffff",
+      font_family: "Poppins",
+      font_size: 16
+    };
+
+    let cartCount = 0;
+
+    async function onConfigChange(config) {
+      const elements = {
+        tagline: document.getElementById('site-tagline'),
+        heroOffer1: document.getElementById('hero-offer-1'),
+        heroOffer2: document.getElementById('hero-offer-2'),
+        heroOffer3: document.getElementById('hero-offer-3'),
+        footerAbout: document.getElementById('footer-about'),
+        customerService: document.getElementById('customer-service')
+      };
+      
+      if (elements.tagline) elements.tagline.textContent = config.site_tagline || defaultConfig.site_tagline;
+      if (elements.heroOffer1) elements.heroOffer1.textContent = config.hero_offer_1 || defaultConfig.hero_offer_1;
+      if (elements.heroOffer2) elements.heroOffer2.textContent = config.hero_offer_2 || defaultConfig.hero_offer_2;
+      if (elements.heroOffer3) elements.heroOffer3.textContent = config.hero_offer_3 || defaultConfig.hero_offer_3;
+      if (elements.footerAbout) elements.footerAbout.textContent = config.footer_about || defaultConfig.footer_about;
+      if (elements.customerService) elements.customerService.textContent = config.customer_service || defaultConfig.customer_service;
+
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const cardBackground = config.card_background || defaultConfig.card_background;
+
+      document.body.style.backgroundColor = backgroundColor;
+
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'sans-serif';
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontSize = `${baseSize}px`;
+
+      document.querySelectorAll('h1').forEach(el => {
+        el.style.fontSize = `${baseSize * 2}px`;
+      });
+
+      document.querySelectorAll('h2').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.75}px`;
+      });
+
+      document.querySelectorAll('h3').forEach(el => {
+        el.style.fontSize = `${baseSize * 1.5}px`;
+      });
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.card_background || defaultConfig.card_background,
+            set: (value) => {
+              config.card_background = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ card_background: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["site_tagline", config.site_tagline || defaultConfig.site_tagline],
+        ["hero_offer_1", config.hero_offer_1 || defaultConfig.hero_offer_1],
+        ["hero_offer_2", config.hero_offer_2 || defaultConfig.hero_offer_2],
+        ["hero_offer_3", config.hero_offer_3 || defaultConfig.hero_offer_3],
+        ["footer_about", config.footer_about || defaultConfig.footer_about],
+        ["customer_service", config.customer_service || defaultConfig.customer_service]
+      ]);
+    }
+
+    function changePage(pageId) {
+      document.querySelectorAll('.page-content').forEach(page => {
+        page.classList.add('hidden');
+      });
+      const targetPage = document.getElementById(`page-${pageId}`);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+      }
+      window.scrollTo(0, 0);
+    }
+
+    function handleSearch() {
+      const searchInput = document.getElementById('search-input');
+      const query = searchInput ? searchInput.value.trim() : '';
+      if (query) {
+        showToast(`Searching for: ${query}`);
+        changePage('products');
+      } else {
+        showToast('Please enter a search term');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      if (toast && toastMessage) {
+        toastMessage.textContent = message;
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          toast.classList.add('hidden');
+        }, 3000);
+      }
+    }
+
+    function addToCart() {
+      cartCount++;
+      const cartCountEl = document.getElementById('cart-count');
+      if (cartCountEl) {
+        cartCountEl.textContent = cartCount;
+      }
+      showToast('Item added to cart successfully!');
+    }
+
+    function buyNow() {
+      addToCart();
+      setTimeout(() => {
+        changePage('checkout');
+      }, 500);
+    }
+
+    function placeOrder() {
+      showToast('🎉 Order placed successfully! Thank you for shopping with GANESHA');
+      setTimeout(() => {
+        changePage('home');
+        cartCount = 0;
+        const cartCountEl = document.getElementById('cart-count');
+        if (cartCountEl) {
+          cartCountEl.textContent = cartCount;
+        }
+      }, 2000);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b83a7d5f1b06e29',t:'MTc2NzQ1NTQ2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
