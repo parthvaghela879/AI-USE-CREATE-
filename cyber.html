@@ -1,0 +1,2272 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GANESHA - Divine Cybersecurity Platform</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&amp;family=Orbitron:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .orbitron {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+    }
+
+    .glow-box {
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+    }
+
+    .circuit-pattern {
+      background-image: 
+        linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .terminal-cursor::after {
+      content: '▊';
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(157, 0, 255, 0.1) 100%);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      border-color: rgba(0, 212, 255, 0.8);
+      animation: pulse-glow 2s infinite;
+    }
+
+    .course-card {
+      background: linear-gradient(145deg, rgba(10, 10, 15, 0.9) 0%, rgba(20, 20, 30, 0.9) 100%);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .course-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .course-card:hover::before {
+      left: 100%;
+    }
+
+    .course-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 255, 65, 0.6);
+      box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00D4FF 0%, #9D00FF 100%);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .terminal-input {
+      background: rgba(0, 20, 30, 0.8);
+      border: 1px solid rgba(0, 255, 65, 0.3);
+      color: #00FF41;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s ease;
+    }
+
+    .terminal-input:focus {
+      outline: none;
+      border-color: #00FF41;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+
+    .testimonial-card {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(157, 0, 255, 0.05) 100%);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(0, 212, 255, 0.6);
+      transform: translateY(-5px);
+    }
+
+    .company-logo {
+      filter: grayscale(100%) brightness(0.4);
+      transition: all 0.3s ease;
+    }
+
+    .company-logo:hover {
+      filter: grayscale(0%) brightness(1);
+      transform: scale(1.1);
+    }
+
+    .lab-badge {
+      background: linear-gradient(135deg, rgba(255, 51, 51, 0.2) 0%, rgba(157, 0, 255, 0.2) 100%);
+      border: 1px solid rgba(255, 51, 51, 0.5);
+    }
+
+    .scroll-indicator {
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .hexagon {
+      clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
+    }
+
+    .command-history-item {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .command-history-item:hover {
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateX(5px);
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: 8px;
+      z-index: 10000;
+      animation: slideInRight 0.3s ease;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .notification.success {
+      background: linear-gradient(135deg, rgba(0, 255, 65, 0.9), rgba(0, 212, 255, 0.9));
+      border: 1px solid #00FF41;
+    }
+
+    .notification.error {
+      background: linear-gradient(135deg, rgba(255, 51, 51, 0.9), rgba(157, 0, 255, 0.9));
+      border: 1px solid #FF3333;
+    }
+
+    .notification.info {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.9), rgba(157, 0, 255, 0.9));
+      border: 1px solid #00D4FF;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .modal-content {
+      background: linear-gradient(145deg, rgba(10, 10, 15, 0.95) 0%, rgba(20, 20, 30, 0.95) 100%);
+      border: 2px solid rgba(0, 212, 255, 0.5);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    /* Mobile Responsive Enhancements */
+    @media (max-width: 768px) {
+      .terminal-window {
+        font-size: 12px;
+      }
+      
+      .tool-button {
+        padding: 8px 12px;
+        font-size: 10px;
+      }
+
+      .objective-item {
+        padding: 8px;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .course-card, .stat-card, .testimonial-card {
+        -webkit-tap-highlight-color: rgba(0, 212, 255, 0.2);
+      }
+    }
+
+    .network-node {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .connection-line {
+      stroke-dasharray: 5, 5;
+      animation: dash 20s linear infinite;
+    }
+
+    @keyframes dash {
+      to { stroke-dashoffset: -100; }
+    }
+
+    .loading-spinner {
+      border: 3px solid rgba(0, 212, 255, 0.3);
+      border-top: 3px solid #00D4FF;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full" style="background: #0A0A0F; color: #E0E0E0;"><!-- Matrix Background Canvas -->
+  <canvas id="matrixCanvas" class="matrix-bg"></canvas>
+  <div class="w-full h-full overflow-auto"><!-- Navigation -->
+   <nav class="circuit-pattern relative z-10 border-b border-cyan-500/20" style="background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(10px);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+     <div class="flex items-center justify-between"><!-- Logo -->
+      <div class="flex items-center space-x-3">
+       <div class="relative w-12 h-12 sm:w-16 sm:h-16">
+        <svg viewbox="0 0 100 100" class="w-full h-full"><defs>
+          <lineargradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+           <stop offset="100%" style="stop-color:#9D00FF;stop-opacity:1" />
+          </lineargradient>
+          <filter id="glow">
+           <fegaussianblur stddeviation="2" result="coloredBlur" />
+           <femerge>
+            <femergenode in="coloredBlur" />
+            <femergenode in="SourceGraphic" />
+           </femerge>
+          </filter>
+         </defs> <path d="M50 5 L80 20 L80 50 Q80 70 50 90 Q20 70 20 50 L20 20 Z" fill="none" stroke="url(#logoGradient)" stroke-width="2" filter="url(#glow)" /> <ellipse cx="50" cy="45" rx="18" ry="20" fill="url(#logoGradient)" opacity="0.3" /> <path d="M50 55 Q45 65 40 70 M42 62 L44 62 M40 66 L42 66 M38 70 L40 70" stroke="#00FF41" stroke-width="2" fill="none" stroke-linecap="round" /> <circle cx="50" cy="38" r="3" fill="#00FF41" filter="url(#glow)" /> <rect x="49" y="36" width="2" height="4" fill="#00FF41" /> <ellipse cx="35" cy="40" rx="5" ry="8" fill="none" stroke="#00D4FF" stroke-width="1.5" /> <ellipse cx="65" cy="40" rx="5" ry="8" fill="none" stroke="#00D4FF" stroke-width="1.5" /> <circle cx="50" cy="30" r="2" fill="#FF3333" filter="url(#glow)" /> <circle cx="50" cy="30" r="4" fill="none" stroke="#FF3333" stroke-width="1" /> <line x1="45" y1="25" x2="48" y2="28" stroke="#00D4FF" stroke-width="0.5" opacity="0.6" /> <line x1="55" y1="25" x2="52" y2="28" stroke="#00D4FF" stroke-width="0.5" opacity="0.6" /> <circle cx="45" cy="25" r="1" fill="#00D4FF" opacity="0.6" /> <circle cx="55" cy="25" r="1" fill="#00D4FF" opacity="0.6" />
+        </svg>
+       </div>
+       <div>
+        <h1 id="platformName" class="orbitron text-xl sm:text-3xl font-bold glow-text" style="color: #00D4FF;">GANESHA</h1>
+        <p id="tagline" class="text-xs hidden sm:block" style="color: #00FF41;">Divine Cybersecurity. Ethical Power.</p>
+       </div>
+      </div><!-- Navigation Links -->
+      <div class="hidden lg:flex items-center space-x-6"><a href="#home" class="text-sm font-medium hover:text-cyan-400 transition-colors">HOME</a> <!-- Courses Dropdown -->
+       <div class="relative group"><button class="text-sm font-medium hover:text-cyan-400 transition-colors flex items-center"> COURSES <span class="ml-1">▾</span> </button>
+        <div class="absolute top-full left-0 mt-2 w-[800px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+         <div class="p-6 rounded-lg border" style="background: rgba(10, 10, 15, 0.98); border-color: rgba(0, 212, 255, 0.3); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);">
+          <div class="grid grid-cols-3 gap-6"><!-- Web Penetration Testing -->
+           <div>
+            <h4 class="orbitron text-sm font-bold mb-3 flex items-center" style="color: #00D4FF;">🌐 WEB PENTESTING</h4>
+            <ul class="space-y-2 text-xs">
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>OWASP Top 10</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>SQL Injection Mastery</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>XSS &amp; CSRF Attacks</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>API Security Testing</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Burp Suite Pro</a></li>
+            </ul>
+           </div><!-- Network Security -->
+           <div>
+            <h4 class="orbitron text-sm font-bold mb-3 flex items-center" style="color: #00FF41;">🔌 NETWORK SECURITY</h4>
+            <ul class="space-y-2 text-xs">
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Network Scanning (Nmap)</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Wireless Hacking</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Man-in-the-Middle</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>VPN Penetration</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Firewall Bypass</a></li>
+            </ul>
+           </div><!-- System Exploitation -->
+           <div>
+            <h4 class="orbitron text-sm font-bold mb-3 flex items-center" style="color: #9D00FF;">💻 SYSTEM EXPLOITATION</h4>
+            <ul class="space-y-2 text-xs">
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Metasploit Framework</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Buffer Overflow</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Privilege Escalation</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Windows Exploitation</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Linux Exploitation</a></li>
+            </ul>
+           </div><!-- Malware & Forensics -->
+           <div>
+            <h4 class="orbitron text-sm font-bold mb-3 flex items-center" style="color: #FF3333;">🦠 MALWARE ANALYSIS</h4>
+            <ul class="space-y-2 text-xs">
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Reverse Engineering</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Static Analysis</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Dynamic Analysis</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Ransomware Research</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Digital Forensics</a></li>
+            </ul>
+           </div><!-- Cloud & Mobile -->
+           <div>
+            <h4 class="orbitron text-sm font-bold mb-3 flex items-center" style="color: #FFA500;">☁️ CLOUD &amp; MOBILE</h4>
+            <ul class="space-y-2 text-xs">
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>AWS Security</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Azure Pentesting</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Android Hacking</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>iOS Security</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Container Security</a></li>
+            </ul>
+           </div><!-- Advanced Topics -->
+           <div>
+            <h4 class="orbitron text-sm font-bold mb-3 flex items-center" style="color: #00D4FF;">🚀 ADVANCED TOPICS</h4>
+            <ul class="space-y-2 text-xs">
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Active Directory</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Red Team Operations</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>IoT Hacking</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Blockchain Security</a></li>
+             <li><a href="#" class="hover:text-cyan-400 transition-colors flex items-center"><span class="mr-2">•</span>Zero-Day Research</a></li>
+            </ul>
+           </div>
+          </div><!-- Featured Certifications -->
+          <div class="mt-6 pt-6 border-t" style="border-color: rgba(0, 212, 255, 0.2);">
+           <div class="flex items-center justify-between">
+            <div>
+             <p class="orbitron text-xs font-bold mb-2" style="color: #00FF41;">🏆 CERTIFICATION PATHS</p>
+             <div class="flex items-center space-x-4 text-xs opacity-70"><span>CEH</span> <span>•</span> <span>OSCP</span> <span>•</span> <span>OSCE</span> <span>•</span> <span>eJPT</span> <span>•</span> <span>Security+</span>
+             </div>
+            </div><button class="orbitron text-xs font-bold px-4 py-2 rounded" style="background: #00D4FF; color: #000000;"> VIEW ALL COURSES → </button>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Learning Paths -->
+       <div class="relative group"><button class="text-sm font-medium hover:text-cyan-400 transition-colors flex items-center"> LEARNING PATHS <span class="ml-1">▾</span> </button>
+        <div class="absolute top-full left-0 mt-2 w-[400px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+         <div class="p-6 rounded-lg border" style="background: rgba(10, 10, 15, 0.98); border-color: rgba(0, 212, 255, 0.3); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);">
+          <div class="space-y-4"><a href="#" class="block p-4 rounded-lg border hover:scale-105 transition-transform" style="background: rgba(0, 212, 255, 0.1); border-color: #00D4FF;">
+            <div class="flex items-center justify-between mb-2"><span class="orbitron text-sm font-bold" style="color: #00D4FF;">🛡️ BEGINNER PATH</span> <span class="text-xs px-2 py-1 rounded" style="background: rgba(0, 255, 65, 0.2); color: #00FF41;">3-6 MONTHS</span>
+            </div><p class="text-xs opacity-70">Zero to Security Analyst • 8 Courses • 150+ Labs</p></a> <a href="#" class="block p-4 rounded-lg border hover:scale-105 transition-transform" style="background: rgba(157, 0, 255, 0.1); border-color: #9D00FF;">
+            <div class="flex items-center justify-between mb-2"><span class="orbitron text-sm font-bold" style="color: #9D00FF;">⚔️ INTERMEDIATE PATH</span> <span class="text-xs px-2 py-1 rounded" style="background: rgba(255, 165, 0, 0.2); color: #FFA500;">6-12 MONTHS</span>
+            </div><p class="text-xs opacity-70">Advanced Exploitation • 12 Courses • 300+ Labs</p></a> <a href="#" class="block p-4 rounded-lg border hover:scale-105 transition-transform" style="background: rgba(255, 51, 51, 0.1); border-color: #FF3333;">
+            <div class="flex items-center justify-between mb-2"><span class="orbitron text-sm font-bold" style="color: #FF3333;">🔥 ADVANCED PATH</span> <span class="text-xs px-2 py-1 rounded" style="background: rgba(255, 51, 51, 0.3); color: #FF3333;">12+ MONTHS</span>
+            </div><p class="text-xs opacity-70">Exploit Development • 18 Courses • 500+ Labs</p></a>
+          </div>
+         </div>
+        </div>
+       </div><a href="#labs" class="text-sm font-medium hover:text-cyan-400 transition-colors">LABS</a> <!-- Resources -->
+       <div class="relative group"><button class="text-sm font-medium hover:text-cyan-400 transition-colors flex items-center"> RESOURCES <span class="ml-1">▾</span> </button>
+        <div class="absolute top-full left-0 mt-2 w-[300px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+         <div class="p-4 rounded-lg border" style="background: rgba(10, 10, 15, 0.98); border-color: rgba(0, 212, 255, 0.3); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);">
+          <ul class="space-y-3 text-sm">
+           <li><a href="#" class="flex items-center hover:text-cyan-400 transition-colors"><span class="mr-3 text-lg">📚</span>Documentation</a></li>
+           <li><a href="#" class="flex items-center hover:text-cyan-400 transition-colors"><span class="mr-3 text-lg">📝</span>CTF Writeups</a></li>
+           <li><a href="#" class="flex items-center hover:text-cyan-400 transition-colors"><span class="mr-3 text-lg">🛠️</span>Hacking Tools</a></li>
+           <li><a href="#" class="flex items-center hover:text-cyan-400 transition-colors"><span class="mr-3 text-lg">🎥</span>Video Tutorials</a></li>
+           <li><a href="#" class="flex items-center hover:text-cyan-400 transition-colors"><span class="mr-3 text-lg">📖</span>E-Books &amp; Guides</a></li>
+           <li><a href="#" class="flex items-center hover:text-cyan-400 transition-colors"><span class="mr-3 text-lg">🔗</span>Cheat Sheets</a></li>
+          </ul>
+         </div>
+        </div>
+       </div><a href="#testimonials" class="text-sm font-medium hover:text-cyan-400 transition-colors">SUCCESS STORIES</a>
+      </div><!-- CTA Button --> <button id="loginBtn" class="btn-primary orbitron px-4 sm:px-6 py-2 rounded-md text-xs sm:text-sm font-bold text-white"> LOGIN </button>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="home" class="relative py-12 sm:py-20 px-4 sm:px-6 overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+     <div class="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center"><!-- Left Content -->
+      <div class="space-y-4 sm:space-y-6">
+       <div class="inline-block px-4 py-2 rounded-full border border-cyan-500/30" style="background: rgba(0, 212, 255, 0.1);"><span class="text-xs orbitron" style="color: #00D4FF;">🔒 SECURE • ETHICAL • POWERFUL</span>
+       </div>
+       <h2 id="heroTitle" class="orbitron text-3xl sm:text-5xl lg:text-6xl font-black leading-tight"><span class="glow-text" style="color: #00D4FF;">Welcome to</span><br><span class="glow-text" style="color: #00FF41;">GANESHA</span></h2>
+       <p id="heroSubtitle" class="text-xl sm:text-2xl font-light" style="color: #9D00FF;">Become an Ethical Hacker</p>
+       <p class="text-base sm:text-lg leading-relaxed opacity-80">Master the art of ethical hacking with India's most comprehensive cybersecurity education platform. From zero to elite pentester.</p><!-- Terminal Typing Effect -->
+       <div class="terminal-input p-3 sm:p-4 rounded-lg font-mono text-xs sm:text-sm">
+        <div class="flex items-center space-x-2 mb-2"><span style="color: #00FF41;">root@ganesha</span> <span style="color: #00D4FF;">~</span> <span style="color: #FF3333;">#</span>
+        </div>
+        <div id="terminalText" class="terminal-cursor" style="color: #00FF41;"></div>
+       </div><button id="ctaButton" class="btn-primary orbitron px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-bold text-white relative z-10 w-full sm:w-auto"> START YOUR JOURNEY → </button> <!-- Trust Badges -->
+       <div class="flex flex-wrap items-center gap-4 sm:gap-6 pt-4">
+        <div class="flex items-center space-x-2"><span class="text-xl sm:text-2xl">🛡️</span> <span class="text-xs sm:text-sm opacity-70">CEH Aligned</span>
+        </div>
+        <div class="flex items-center space-x-2"><span class="text-xl sm:text-2xl">🎯</span> <span class="text-xs sm:text-sm opacity-70">OSCP Prep</span>
+        </div>
+        <div class="flex items-center space-x-2"><span class="text-xl sm:text-2xl">⚡</span> <span class="text-xs sm:text-sm opacity-70">Bug Bounty Ready</span>
+        </div>
+       </div>
+      </div><!-- Right Content - Stats -->
+      <div class="space-y-4">
+       <div class="stat-card p-4 sm:p-6 rounded-lg">
+        <div class="flex items-center justify-between mb-2"><span class="orbitron text-xs sm:text-sm" style="color: #00D4FF;">STUDENTS TRAINED</span> <span class="text-xl sm:text-2xl">👨‍💻</span>
+        </div>
+        <div class="orbitron text-3xl sm:text-4xl font-bold glow-text" style="color: #00FF41;" id="studentCount">
+         0
+        </div>
+       </div>
+       <div class="stat-card p-4 sm:p-6 rounded-lg">
+        <div class="flex items-center justify-between mb-2"><span class="orbitron text-xs sm:text-sm" style="color: #9D00FF;">CVEs DISCOVERED</span> <span class="text-xl sm:text-2xl">🔓</span>
+        </div>
+        <div class="orbitron text-3xl sm:text-4xl font-bold glow-text" style="color: #9D00FF;" id="cveCount">
+         0
+        </div>
+       </div>
+       <div class="stat-card p-4 sm:p-6 rounded-lg">
+        <div class="flex items-center justify-between mb-2"><span class="orbitron text-xs sm:text-sm" style="color: #FF3333;">CERTIFICATIONS EARNED</span> <span class="text-xl sm:text-2xl">🏆</span>
+        </div>
+        <div class="orbitron text-3xl sm:text-4xl font-bold glow-text" style="color: #FF3333;" id="certCount">
+         0
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Enhanced Virtual Lab Section -->
+   <section id="labs" class="py-12 sm:py-20 px-4 sm:px-6" style="background: linear-gradient(180deg, #0A0A0F 0%, #0F0F1A 100%);">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-12 sm:mb-16">
+      <h2 class="orbitron text-3xl sm:text-4xl lg:text-5xl font-black mb-4"><span class="glow-text" style="color: #9D00FF;">VIRTUAL</span> <span class="glow-text" style="color: #00FF41;"> BATTLEGROUND</span></h2>
+      <p class="text-lg sm:text-xl opacity-70">Hands-on labs. Real exploits. Safe environment.</p>
+     </div><!-- Interactive Lab Demo -->
+     <div class="mb-8 sm:mb-12 glow-box p-1 rounded-lg" style="background: linear-gradient(135deg, #00D4FF, #9D00FF);">
+      <div class="rounded-lg p-4 sm:p-6" style="background: #0A0A0F;"><!-- Lab Header -->
+       <div class="border-2 rounded-lg mb-4 p-3 sm:p-4" style="border-color: #00D4FF; background: rgba(0, 212, 255, 0.05);">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 mb-3">
+         <h3 class="orbitron text-base sm:text-xl font-bold" style="color: #00D4FF;">🖥️ GANESHA VIRTUAL LAB - KALI LINUX</h3>
+         <div class="flex items-center gap-2 flex-wrap"><span id="labStatus" class="px-3 py-1 rounded-full text-xs orbitron font-bold" style="background: rgba(0, 255, 65, 0.2); color: #00FF41;">● ONLINE</span> <span class="px-3 py-1 rounded-full text-xs orbitron font-bold" style="background: rgba(255, 165, 0, 0.2); color: #FFA500;">⭐�����⭐ MEDIUM</span>
+         </div>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
+         <div class="stat-card p-2 sm:p-3 rounded text-center">
+          <div class="text-xs opacity-60 mb-1">
+           IP ADDRESS
+          </div>
+          <div class="orbitron text-xs sm:text-sm font-bold" style="color: #00FF41;">
+           192.168.1.100
+          </div>
+         </div>
+         <div class="stat-card p-2 sm:p-3 rounded text-center">
+          <div class="text-xs opacity-60 mb-1">
+           RAM USAGE
+          </div>
+          <div class="orbitron text-xs sm:text-sm font-bold" style="color: #00D4FF;" id="ramUsage">
+           4GB / 8GB
+          </div>
+         </div>
+         <div class="stat-card p-2 sm:p-3 rounded text-center">
+          <div class="text-xs opacity-60 mb-1">
+           CPU LOAD
+          </div>
+          <div class="orbitron text-xs sm:text-sm font-bold" style="color: #FFA500;" id="cpuLoad">
+           45%
+          </div>
+         </div>
+         <div class="stat-card p-2 sm:p-3 rounded text-center">
+          <div class="text-xs opacity-60 mb-1">
+           SESSION TIME
+          </div>
+          <div class="orbitron text-xs sm:text-sm font-bold" style="color: #9D00FF;" id="sessionTimer">
+           02:45:12
+          </div>
+         </div>
+        </div>
+       </div><!-- Main Lab Interface -->
+       <div class="grid lg:grid-cols-3 gap-4"><!-- Terminal Window -->
+        <div class="lg:col-span-2">
+         <div class="border-2 rounded-lg overflow-hidden" style="border-color: #00FF41;">
+          <div class="flex items-center justify-between px-3 sm:px-4 py-2" style="background: rgba(0, 255, 65, 0.1); border-bottom: 1px solid #00FF41;">
+           <div class="flex items-center space-x-2">
+            <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full" style="background: #FF3333;"></div>
+            <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full" style="background: #FFA500;"></div>
+            <div class="w-2 h-2 sm:w-3 sm:h-3 rounded-full" style="background: #00FF41;"></div><span class="orbitron text-xs ml-2 hidden sm:inline" style="color: #00FF41;">root@kali:~#</span>
+           </div>
+           <div class="flex items-center space-x-2 sm:space-x-3"><button id="copyTerminalBtn" class="text-xs hover:text-cyan-400" style="color: #00D4FF;" title="Copy Output">📋</button> <button id="clearTerminalBtn" class="text-xs hover:text-cyan-400" style="color: #00D4FF;" title="Clear Terminal">🔄</button> <button id="fullscreenBtn" class="text-xs hover:text-cyan-400 hidden sm:inline" style="color: #00D4FF;" title="Fullscreen">⛶</button>
+           </div>
+          </div>
+          <div id="terminalOutput" class="p-3 sm:p-4 font-mono text-xs sm:text-sm terminal-window" style="background: #000000; color: #00FF41; height: 300px; overflow-y: auto;">
+           <div class="mb-2" style="color: #00D4FF;">
+            ┌──(root㉿kali)-[~]
+           </div>
+           <div class="mb-2" style="color: #00D4FF;">
+            └─# <span style="color: #00FF41;">Welcome to GANESHA Virtual Lab</span>
+           </div>
+           <div class="mb-2 opacity-70">
+            Type 'help' to see available commands
+           </div>
+           <div class="mb-2" style="color: #00D4FF;">
+            ��──(root㉿kali)-[~]
+           </div>
+           <div style="color: #00D4FF;">
+            └─# <span class="terminal-cursor" style="color: #00FF41;"></span>
+           </div>
+          </div>
+          <div class="flex items-center px-3 sm:px-4 py-2 space-x-2" style="background: rgba(0, 255, 65, 0.05); border-top: 1px solid #00FF41;"><span class="text-xs" style="color: #00FF41;">➜</span> <input type="text" placeholder="Type command..." class="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm font-mono" style="color: #00FF41;" id="labTerminalInput"> <button id="runCommandBtn" class="orbitron text-xs px-2 sm:px-3 py-1 rounded" style="background: #00FF41; color: #000000;">RUN</button>
+          </div>
+         </div><!-- Command History -->
+         <div class="mt-4 border rounded-lg p-3" style="border-color: rgba(0, 212, 255, 0.3); background: rgba(0, 212, 255, 0.05);">
+          <div class="flex items-center justify-between mb-2">
+           <h4 class="orbitron text-sm font-bold" style="color: #00D4FF;">📜 Command History</h4><button id="clearHistoryBtn" class="text-xs hover:text-cyan-400" style="color: #00FF41;">CLEAR</button>
+          </div>
+          <div id="commandHistoryList" class="space-y-1 max-h-32 overflow-y-auto"><!-- Command history will be populated here -->
+          </div>
+         </div><!-- Tool Bar -->
+         <div class="mt-4 grid grid-cols-3 sm:flex sm:flex-wrap gap-2"><button class="tool-launch-btn px-2 sm:px-3 py-2 rounded text-xs orbitron font-bold border hover:bg-cyan-500/10 transition-colors" data-tool="nmap" style="border-color: #00D4FF; color: #00D4FF;">🔍 NMAP</button> <button class="tool-launch-btn px-2 sm:px-3 py-2 rounded text-xs orbitron font-bold border hover:bg-purple-500/10 transition-colors" data-tool="burp" style="border-color: #9D00FF; color: #9D00FF;">🌐 BURP</button> <button class="tool-launch-btn px-2 sm:px-3 py-2 rounded text-xs orbitron font-bold border hover:bg-red-500/10 transition-colors" data-tool="msf" style="border-color: #FF3333; color: #FF3333;">💣 MSF</button> <button class="tool-launch-btn px-2 sm:px-3 py-2 rounded text-xs orbitron font-bold border hover:bg-green-500/10 transition-colors" data-tool="john" style="border-color: #00FF41; color: #00FF41;">🔓 JOHN</button> <button class="tool-launch-btn px-2 sm:px-3 py-2 rounded text-xs orbitron font-bold border hover:bg-orange-500/10 transition-colors" data-tool="wireshark" style="border-color: #FFA500; color: #FFA500;">🦈 SHARK</button> <button class="tool-launch-btn px-2 sm:px-3 py-2 rounded text-xs orbitron font-bold border hover:bg-cyan-500/10 transition-colors" data-tool="sqlmap" style="border-color: #00D4FF; color: #00D4FF;">⚡ SQL</button>
+         </div>
+        </div><!-- Objectives Panel -->
+        <div class="border-2 rounded-lg p-4" style="border-color: #9D00FF; background: rgba(157, 0, 255, 0.05);">
+         <h4 class="orbitron text-base sm:text-lg font-bold mb-4" style="color: #9D00FF;">���� MISSION OBJECTIVES</h4>
+         <div id="objectivesList" class="space-y-2 sm:space-y-3 mb-6"><!-- Objectives will be populated here -->
+         </div><!-- Progress Bar -->
+         <div class="mb-4">
+          <div class="flex items-center justify-between mb-2"><span class="text-xs opacity-70">COMPLETION</span> <span class="orbitron text-xs font-bold" style="color: #00FF41;" id="progressPercent">0%</span>
+          </div>
+          <div class="w-full h-2 rounded-full" style="background: rgba(0, 255, 65, 0.1);">
+           <div id="progressBar" class="h-full rounded-full transition-all duration-500" style="width: 0%; background: linear-gradient(90deg, #00FF41, #00D4FF);"></div>
+          </div>
+         </div><!-- Hints Section -->
+         <div class="border-t pt-4 mb-4" style="border-color: rgba(157, 0, 255, 0.3);">
+          <h5 class="orbitron text-sm font-bold mb-3" style="color: #FFA500;">💡 HINTS</h5>
+          <div class="space-y-2"><button id="hint1Btn" class="w-full text-left px-3 py-2 rounded text-xs border hover:bg-orange-500/10 transition-colors" style="border-color: #FFA500; color: #FFA500;"> 🔓 Hint 1 (-5 pts) </button> <button id="hint2Btn" class="w-full text-left px-3 py-2 rounded text-xs border opacity-50 btn-disabled" style="border-color: #666; color: #666;"> 🔒 Hint 2 (Locked) </button>
+          </div>
+         </div><!-- Submit Flag -->
+         <div class="border-t pt-4" style="border-color: rgba(157, 0, 255, 0.3);">
+          <h5 class="orbitron text-sm font-bold mb-3" style="color: #FF3333;">🚩 SUBMIT FLAG</h5><input type="text" placeholder="FLAG{...}" id="flagInput" class="w-full px-3 py-2 rounded mb-2 text-sm font-mono border" style="background: rgba(0, 0, 0, 0.5); border-color: #FF3333; color: #00FF41;"> <button id="submitFlagBtn" class="w-full orbitron text-xs font-bold py-2 rounded" style="background: #FF3333; color: #000000;">SUBMIT</button>
+         </div>
+        </div>
+       </div><!-- Network Topology Viewer -->
+       <div class="mt-6 border-2 rounded-lg p-4" style="border-color: #00D4FF; background: rgba(0, 212, 255, 0.05);">
+        <h4 class="orbitron text-base font-bold mb-4" style="color: #00D4FF;">🌐 Network Topology</h4>
+        <div class="flex items-center justify-center" style="min-height: 200px;">
+         <svg viewbox="0 0 600 200" class="w-full max-w-2xl"><!-- Attacker --> <circle cx="100" cy="100" r="30" fill="url(#logoGradient)" opacity="0.3" class="network-node" /> <text x="100" y="105" text-anchor="middle" fill="#00FF41" font-size="24">
+           👨‍💻
+          </text> <text x="100" y="150" text-anchor="middle" fill="#00FF41" font-size="12" class="orbitron">
+           YOU
+          </text> <text x="100" y="165" text-anchor="middle" fill="#00D4FF" font-size="10">
+           192.168.1.100
+          </text> <!-- Connection Lines --> <line x1="130" y1="100" x2="270" y2="100" stroke="#00D4FF" stroke-width="2" class="connection-line" opacity="0.6" /> <line x1="330" y1="100" x2="470" y2="100" stroke="#00D4FF" stroke-width="2" class="connection-line" opacity="0.6" /> <!-- Router --> <rect x="270" y="70" width="60" height="60" rx="5" fill="rgba(157, 0, 255, 0.2)" stroke="#9D00FF" stroke-width="2" /> <text x="300" y="105" text-anchor="middle" fill="#9D00FF" font-size="24">
+           🔥
+          </text> <text x="300" y="150" text-anchor="middle" fill="#9D00FF" font-size="12" class="orbitron">
+           ROUTER
+          </text> <!-- Target --> <circle cx="500" cy="100" r="30" fill="rgba(255, 51, 51, 0.2)" stroke="#FF3333" stroke-width="2" class="network-node" /> <text x="500" y="105" text-anchor="middle" fill="#FF3333" font-size="24">
+           🎯
+          </text> <text x="500" y="150" text-anchor="middle" fill="#FF3333" font-size="12" class="orbitron">
+           TARGET
+          </text> <text x="500" y="165" text-anchor="middle" fill="#00D4FF" font-size="10">
+           192.168.1.1
+          </text> <!-- Attack Path --> <path d="M 130 90 L 270 90" stroke="#00FF41" stroke-width="2" fill="none" stroke-dasharray="5,5" opacity="0.8">
+           <animate attributename="stroke-dashoffset" from="0" to="-10" dur="0.5s" repeatcount="indefinite" />
+          </path> <text x="200" y="85" text-anchor="middle" fill="#00FF41" font-size="10" class="orbitron" id="networkStatus">
+           READY
+          </text>
+         </svg>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Testimonials Section -->
+   <section id="testimonials" class="py-12 sm:py-20 px-4 sm:px-6 circuit-pattern">
+    <div class="max-w-7xl mx-auto">
+     <div class="text-center mb-12 sm:mb-16">
+      <h2 class="orbitron text-3xl sm:text-4xl lg:text-5xl font-black mb-4"><span class="glow-text" style="color: #00FF41;">SUCCESS</span> <span class="glow-text" style="color: #00D4FF;"> STORIES</span></h2>
+      <p class="text-lg sm:text-xl opacity-70">From students to security professionals</p>
+     </div><!-- Testimonial Cards -->
+     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"><!-- Testimonials will be populated here -->
+      <div class="testimonial-card p-6 rounded-lg">
+       <div class="flex items-start space-x-4 mb-4">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #00D4FF, #00FF41);">
+         👨‍💼
+        </div>
+        <div>
+         <h4 class="orbitron font-bold" style="color: #00D4FF;">Rahul Sharma</h4>
+         <p class="text-xs opacity-60">Senior Security Analyst @ Google</p>
+         <div class="flex items-center mt-1"><span class="text-xs" style="color: #FFA500;">⭐⭐⭐⭐⭐</span>
+         </div>
+        </div>
+       </div>
+       <p class="text-sm opacity-80 mb-4 italic">"GANESHA transformed me from a curious beginner to a certified pentester in 8 months. The hands-on labs and real-world CTF challenges gave me the confidence to crack my first Bug Bounty worth $5,000!"</p>
+       <div class="flex items-center space-x-2"><span class="px-2 py-1 rounded text-xs" style="background: rgba(0, 212, 255, 0.2); color: #00D4FF;">CEH Certified</span> <span class="px-2 py-1 rounded text-xs" style="background: rgba(0, 255, 65, 0.2); color: #00FF41;">Bug Bounty Hunter</span>
+       </div>
+      </div>
+      <div class="testimonial-card p-6 rounded-lg">
+       <div class="flex items-start space-x-4 mb-4">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #9D00FF, #FF3333);">
+         👩‍💻
+        </div>
+        <div>
+         <h4 class="orbitron font-bold" style="color: #9D00FF;">Priya Patel</h4>
+         <p class="text-xs opacity-60">Penetration Tester @ Microsoft</p>
+         <div class="flex items-center mt-1"><span class="text-xs" style="color: #FFA500;">⭐⭐⭐⭐⭐</span>
+         </div>
+        </div>
+       </div>
+       <p class="text-sm opacity-80 mb-4 italic">"The OSCP preparation track is incredible! I passed on my first attempt thanks to GANESHA's realistic exam simulations. Now working at Microsoft securing cloud infrastructure."</p>
+       <div class="flex items-center space-x-2"><span class="px-2 py-1 rounded text-xs" style="background: rgba(157, 0, 255, 0.2); color: #9D00FF;">OSCP</span> <span class="px-2 py-1 rounded text-xs" style="background: rgba(255, 51, 51, 0.2); color: #FF3333;">GEHCP</span>
+       </div>
+      </div>
+      <div class="testimonial-card p-6 rounded-lg">
+       <div class="flex items-start space-x-4 mb-4">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #00FF41, #00D4FF);">
+         👨‍🔬
+        </div>
+        <div>
+         <h4 class="orbitron font-bold" style="color: #00FF41;">Arjun Mehta</h4>
+         <p class="text-xs opacity-60">Malware Analyst @ CrowdStrike</p>
+         <div class="flex items-center mt-1"><span class="text-xs" style="color: #FFA500;">⭐⭐⭐⭐⭐</span>
+         </div>
+        </div>
+       </div>
+       <p class="text-sm opacity-80 mb-4 italic">"The Digital Forensics and Malware Analysis courses are world-class. I discovered 2 zero-days during practice labs and now work at CrowdStrike analyzing nation-state threats."</p>
+       <div class="flex items-center space-x-2"><span class="px-2 py-1 rounded text-xs" style="background: rgba(0, 255, 65, 0.2); color: #00FF41;">GDFP</span> <span class="px-2 py-1 rounded text-xs" style="background: rgba(0, 212, 255, 0.2); color: #00D4FF;">CVE Author</span>
+       </div>
+      </div>
+     </div><!-- Company Logos -->
+     <div class="mb-12">
+      <h3 class="orbitron text-2xl font-bold mb-8 text-center" style="color: #9D00FF;">🏢 Our Alumni Work At</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+       <div class="company-logo text-center p-4 rounded-lg" style="background: rgba(0, 212, 255, 0.05);">
+        <div class="text-3xl mb-2">
+         🔍
+        </div>
+        <p class="text-xs orbitron font-bold">GOOGLE</p>
+       </div>
+       <div class="company-logo text-center p-4 rounded-lg" style="background: rgba(0, 212, 255, 0.05);">
+        <div class="text-3xl mb-2">
+         ⊞
+        </div>
+        <p class="text-xs orbitron font-bold">MICROSOFT</p>
+       </div>
+       <div class="company-logo text-center p-4 rounded-lg" style="background: rgba(0, 212, 255, 0.05);">
+        <div class="text-3xl mb-2">
+         📦
+        </div>
+        <p class="text-xs orbitron font-bold">AMAZON</p>
+       </div>
+       <div class="company-logo text-center p-4 rounded-lg" style="background: rgba(0, 212, 255, 0.05);">
+        <div class="text-3xl mb-2">
+         🏭
+        </div>
+        <p class="text-xs orbitron font-bold">META</p>
+       </div>
+       <div class="company-logo text-center p-4 rounded-lg" style="background: rgba(0, 212, 255, 0.05);">
+        <div class="text-3xl mb-2">
+         🦅
+        </div>
+        <p class="text-xs orbitron font-bold">CROWDSTRIKE</p>
+       </div>
+       <div class="company-logo text-center p-4 rounded-lg" style="background: rgba(0, 212, 255, 0.05);">
+        <div class="text-3xl mb-2">
+         ⚡
+        </div>
+        <p class="text-xs orbitron font-bold">TESLA</p>
+       </div>
+      </div>
+     </div><!-- Certifications -->
+     <div class="glow-box p-8 rounded-lg" style="background: rgba(157, 0, 255, 0.05); border: 1px solid rgba(157, 0, 255, 0.3);">
+      <h3 class="orbitron text-2xl font-bold mb-6 text-center" style="color: #00D4FF;">🏆 Recognized Certifications</h3>
+      <div class="grid md:grid-cols-4 gap-6">
+       <div class="text-center">
+        <div class="w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, #00D4FF, #00FF41);">
+         🛡️
+        </div>
+        <p class="orbitron text-sm font-bold mb-1" style="color: #00D4FF;">EC-Council</p>
+        <p class="text-xs opacity-60">CEH Aligned Curriculum</p>
+       </div>
+       <div class="text-center">
+        <div class="w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, #9D00FF, #FF3333);">
+         ⚔️
+        </div>
+        <p class="orbitron text-sm font-bold mb-1" style="color: #9D00FF;">Offensive Security</p>
+        <p class="text-xs opacity-60">OSCP Preparation Partner</p>
+       </div>
+       <div class="text-center">
+        <div class="w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, #00FF41, #00D4FF);">
+         🔐
+        </div>
+        <p class="orbitron text-sm font-bold mb-1" style="color: #00FF41;">CompTIA</p>
+        <p class="text-xs opacity-60">Security+ Authorized</p>
+       </div>
+       <div class="text-center">
+        <div class="w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, #FF3333, #9D00FF);">
+         🎓
+        </div>
+        <p class="orbitron text-sm font-bold mb-1" style="color: #FF3333;">GANESHA</p>
+        <p class="text-xs opacity-60">Proprietary Certifications</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Stats Banner -->
+   <section class="py-12 px-4 sm:px-6" style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(157, 0, 255, 0.1));">
+    <div class="max-w-7xl mx-auto">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="text-center">
+       <div class="orbitron text-3xl sm:text-4xl font-bold mb-2 glow-text" style="color: #00D4FF;">
+        52,847+
+       </div>
+       <p class="text-sm opacity-70">Students Trained</p>
+      </div>
+      <div class="text-center">
+       <div class="orbitron text-3xl sm:text-4xl font-bold mb-2 glow-text" style="color: #00FF41;">
+        315+
+       </div>
+       <p class="text-sm opacity-70">Hands-on Labs</p>
+      </div>
+      <div class="text-center">
+       <div class="orbitron text-3xl sm:text-4xl font-bold mb-2 glow-text" style="color: #9D00FF;">
+        247
+       </div>
+       <p class="text-sm opacity-70">CVEs Discovered</p>
+      </div>
+      <div class="text-center">
+       <div class="orbitron text-3xl sm:text-4xl font-bold mb-2 glow-text" style="color: #FF3333;">
+        94%
+       </div>
+       <p class="text-sm opacity-70">Job Placement Rate</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-8 sm:py-12 px-4 sm:px-6 border-t border-cyan-500/20" style="background: rgba(10, 10, 15, 0.95);">
+    <div class="max-w-7xl mx-auto">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8">
+      <div>
+       <h4 class="orbitron font-bold mb-4 text-sm" style="color: #00D4FF;">COURSES</h4>
+       <ul class="space-y-2 text-xs sm:text-sm opacity-70">
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Web Pentesting</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Network Security</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Linux Mastery</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="orbitron font-bold mb-4 text-sm" style="color: #00FF41;">RESOURCES</h4>
+       <ul class="space-y-2 text-xs sm:text-sm opacity-70">
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Blog</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Writeups</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Tools</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="orbitron font-bold mb-4 text-sm" style="color: #9D00FF;">COMMUNITY</h4>
+       <ul class="space-y-2 text-xs sm:text-sm opacity-70">
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Discord</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Forums</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Events</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="orbitron font-bold mb-4 text-sm" style="color: #FF3333;">COMPANY</h4>
+       <ul class="space-y-2 text-xs sm:text-sm opacity-70">
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">About</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Careers</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition-colors">Contact</a></li>
+       </ul>
+      </div>
+     </div>
+     <div class="border-t border-cyan-500/20 pt-6 sm:pt-8 text-center">
+      <p class="text-xs sm:text-sm opacity-50">© 2024 GANESHA - Divine Cybersecurity. Ethical Power. All rights reserved.</p>
+      <p class="text-xs opacity-30 mt-2">🔒 Platform secured by advanced encryption • For educational purposes only</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // ========================================
+    // CONFIGURATION & INITIAL SETUP
+    // ========================================
+    
+    const defaultConfig = {
+      platform_name: "GANESHA",
+      tagline: "Divine Cybersecurity. Ethical Power.",
+      hero_title: "Welcome to GANESHA",
+      hero_subtitle: "Become an Ethical Hacker",
+      cta_button: "START YOUR JOURNEY",
+      background_color: "#0A0A0F",
+      primary_color: "#00D4FF",
+      secondary_color: "#00FF41",
+      accent_color: "#9D00FF",
+      text_color: "#E0E0E0"
+    };
+
+    // ========================================
+    // DATA STORAGE (LocalStorage Simulation)
+    // ========================================
+    
+    class DataStore {
+      constructor() {
+        this.storageKey = 'ganesha_lab_data';
+        this.initializeData();
+      }
+
+      initializeData() {
+        if (!localStorage.getItem(this.storageKey)) {
+          const initialData = {
+            objectives: [
+              { id: 1, text: 'Scan the target network', completed: false },
+              { id: 2, text: 'Identify open ports', completed: false },
+              { id: 3, text: 'Determine service versions', completed: false },
+              { id: 4, text: 'Find vulnerable service', completed: false },
+              { id: 5, text: 'Exploit vulnerability', completed: false },
+              { id: 6, text: 'Capture the flag', completed: false }
+            ],
+            commandHistory: [],
+            score: 0,
+            hintsUsed: 0,
+            sessionStartTime: Date.now(),
+            correctFlag: 'FLAG{G4N3SH4_M4ST3R_H4CK3R_2024}'
+          };
+          this.saveData(initialData);
+        }
+      }
+
+      getData() {
+        return JSON.parse(localStorage.getItem(this.storageKey));
+      }
+
+      saveData(data) {
+        localStorage.setItem(this.storageKey, JSON.stringify(data));
+      }
+
+      updateObjective(id, completed) {
+        const data = this.getData();
+        const objective = data.objectives.find(obj => obj.id === id);
+        if (objective) {
+          objective.completed = completed;
+          this.saveData(data);
+        }
+      }
+
+      addCommand(command) {
+        const data = this.getData();
+        data.commandHistory.unshift({
+          command,
+          timestamp: Date.now()
+        });
+        // Keep only last 10 commands
+        if (data.commandHistory.length > 10) {
+          data.commandHistory = data.commandHistory.slice(0, 10);
+        }
+        this.saveData(data);
+      }
+
+      updateScore(points) {
+        const data = this.getData();
+        data.score += points;
+        this.saveData(data);
+      }
+
+      useHint() {
+        const data = this.getData();
+        data.hintsUsed += 1;
+        this.saveData(data);
+      }
+
+      reset() {
+        localStorage.removeItem(this.storageKey);
+        this.initializeData();
+      }
+    }
+
+    const dataStore = new DataStore();
+
+    // ========================================
+    // TERMINAL COMMANDS SYSTEM
+    // ========================================
+    
+    const commandDatabase = {
+      'help': {
+        output: `Available commands:
+  help        - Show this help message
+  nmap        - Network scanning tool
+  ls          - List directory contents
+  whoami      - Print current user
+  pwd         - Print working directory
+  clear       - Clear terminal
+  ifconfig    - Network interface configuration
+  netstat     - Network statistics
+  exploit     - Launch exploitation framework
+  flag        - Submit a flag`,
+        action: null
+      },
+      'nmap': {
+        output: `Starting Nmap 7.92 ( https://nmap.org )
+Nmap scan report for target.local (192.168.1.1)
+Host is up (0.00023s latency).
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 8.2p1
+80/tcp   open  http       Apache httpd 2.4.41
+443/tcp  open  ssl/https  Apache httpd 2.4.41 (VULNERABLE)`,
+        action: () => {
+          dataStore.updateObjective(1, true);
+          dataStore.updateObjective(2, true);
+          dataStore.updateObjective(3, true);
+          showNotification('Objectives completed! Vulnerable service found on port 443.', 'success');
+          updateObjectivesList();
+        }
+      },
+      'nmap -sV 192.168.1.1': {
+        output: `Starting Nmap 7.92 scan...
+Discovered open port 22/tcp on 192.168.1.1
+Discovered open port 80/tcp on 192.168.1.1
+Discovered open port 443/tcp on 192.168.1.1
+Service detection performed.`,
+        action: () => {
+          dataStore.updateObjective(1, true);
+          dataStore.updateObjective(2, true);
+          updateObjectivesList();
+        }
+      },
+      'ls': {
+        output: `total 24
+drwxr-xr-x 2 root root 4096 Jan 15 14:23 .
+drwxr-xr-x 3 root root 4096 Jan 15 14:20 ..
+-rw-r--r-- 1 root root  220 Jan 15 14:20 exploit.py
+-rw-r--r-- 1 root root 3526 Jan 15 14:20 wordlist.txt
+-rwxr-xr-x 1 root root 8192 Jan 15 14:22 scanner`,
+        action: null
+      },
+      'whoami': {
+        output: 'root',
+        action: null
+      },
+      'pwd': {
+        output: '/root',
+        action: null
+      },
+      'clear': {
+        output: '',
+        action: () => {
+          const terminalOutput = document.getElementById('terminalOutput');
+          terminalOutput.innerHTML = `<div class="mb-2" style="color: #00D4FF;">┌──(root㉿kali)-[~]</div>
+<div style="color: #00D4FF;">└─# <span class="terminal-cursor" style="color: #00FF41;"></span></div>`;
+        }
+      },
+      'ifconfig': {
+        output: `eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.1.100  netmask 255.255.255.0  broadcast 192.168.1.255
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)`,
+        action: null
+      },
+      'netstat -tuln': {
+        output: `Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN`,
+        action: null
+      },
+      'exploit': {
+        output: `Launching Metasploit Framework...
+[*] Initializing exploit modules...
+[*] Searching for vulnerabilities...
+[+] Found: Apache mod_ssl 2.4.41 - Remote Code Execution
+[*] Attempting exploitation...
+[+] Exploitation successful!
+[+] Shell obtained on target system
+[+] Flag location: /root/flag.txt`,
+        action: () => {
+          dataStore.updateObjective(4, true);
+          dataStore.updateObjective(5, true);
+          showNotification('Exploitation successful! Flag found at /root/flag.txt', 'success');
+          updateObjectivesList();
+        }
+      },
+      'cat /root/flag.txt': {
+        output: `FLAG{G4N3SH4_M4ST3R_H4CK3R_2024}
+
+Congratulations! You've successfully completed the challenge.`,
+        action: () => {
+          showNotification('Flag revealed! Submit it to complete the challenge.', 'info');
+        }
+      }
+    };
+
+    // ========================================
+    // TERMINAL FUNCTIONALITY
+    // ========================================
+    
+    function executeCommand(command) {
+      const terminalOutput = document.getElementById('terminalOutput');
+      const trimmedCommand = command.trim().toLowerCase();
+      
+      // Add command to history
+      dataStore.addCommand(command);
+      updateCommandHistory();
+      
+      // Display command
+      const commandLine = document.createElement('div');
+      commandLine.innerHTML = `<div class="mb-2" style="color: #00D4FF;">┌──(root㉿kali)-[~]</div>
+<div class="mb-2" style="color: #00D4FF;">└─# <span style="color: #00FF41;">${command}</span></div>`;
+      terminalOutput.appendChild(commandLine);
+      
+      // Execute command
+      const commandObj = commandDatabase[trimmedCommand];
+      
+      if (commandObj) {
+        if (commandObj.output) {
+          const outputLine = document.createElement('div');
+          outputLine.className = 'mb-4 opacity-80';
+          outputLine.innerHTML = commandObj.output.replace(/\n/g, '<br>');
+          terminalOutput.appendChild(outputLine);
+        }
+        
+        if (commandObj.action) {
+          commandObj.action();
+        }
+      } else {
+        const errorLine = document.createElement('div');
+        errorLine.className = 'mb-4';
+        errorLine.style.color = '#FF3333';
+        errorLine.textContent = `bash: ${command}: command not found`;
+        terminalOutput.appendChild(errorLine);
+      }
+      
+      // Add new prompt
+      const newPrompt = document.createElement('div');
+      newPrompt.innerHTML = `<div class="mb-2" style="color: #00D4FF;">┌──(root㉿kali)-[~]</div>
+<div style="color: #00D4FF;">└─# <span class="terminal-cursor" style="color: #00FF41;"></span></div>`;
+      terminalOutput.appendChild(newPrompt);
+      
+      // Scroll to bottom
+      terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    }
+
+    // ========================================
+    // TOOL LAUNCH SYSTEM
+    // ========================================
+    
+    const toolCommands = {
+      'nmap': 'nmap -sV -sC 192.168.1.1',
+      'burp': 'burpsuite &',
+      'msf': 'msfconsole -q',
+      'john': 'john --wordlist=rockyou.txt hashes.txt',
+      'wireshark': 'wireshark &',
+      'sqlmap': 'sqlmap -u "http://target.com" --dbs'
+    };
+
+    function launchTool(toolName) {
+      const command = toolCommands[toolName];
+      if (command) {
+        document.getElementById('labTerminalInput').value = command;
+        executeCommand(command);
+        document.getElementById('labTerminalInput').value = '';
+        showNotification(`${toolName.toUpperCase()} launched successfully!`, 'success');
+        updateNetworkStatus('SCANNING...');
+        setTimeout(() => updateNetworkStatus('ACTIVE'), 2000);
+      }
+    }
+
+    // ========================================
+    // OBJECTIVES SYSTEM
+    // ========================================
+    
+    function updateObjectivesList() {
+      const data = dataStore.getData();
+      const objectivesList = document.getElementById('objectivesList');
+      objectivesList.innerHTML = '';
+      
+      let completedCount = 0;
+      data.objectives.forEach(obj => {
+        if (obj.completed) completedCount++;
+        
+        const objDiv = document.createElement('div');
+        objDiv.className = 'objective-item flex items-start space-x-3 p-2 rounded';
+        objDiv.style.background = obj.completed 
+          ? 'rgba(0, 255, 65, 0.1)' 
+          : 'rgba(255, 255, 255, 0.05)';
+        
+        objDiv.innerHTML = `
+          <span style="color: ${obj.completed ? '#00FF41' : '#666'};">
+            ${obj.completed ? '✓' : '✗'}
+          </span>
+          <span class="text-xs sm:text-sm ${obj.completed ? '' : 'opacity-50'}">
+            ${obj.text}
+          </span>
+        `;
+        
+        objectivesList.appendChild(objDiv);
+      });
+      
+      // Update progress
+      const progress = (completedCount / data.objectives.length) * 100;
+      document.getElementById('progressBar').style.width = `${progress}%`;
+      document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+      
+      // Unlock hint 2 if 50% complete
+      if (progress >= 50) {
+        const hint2Btn = document.getElementById('hint2Btn');
+        hint2Btn.classList.remove('btn-disabled', 'opacity-50');
+        hint2Btn.style.borderColor = '#FFA500';
+        hint2Btn.style.color = '#FFA500';
+        hint2Btn.innerHTML = '🔓 Hint 2 (-10 pts)';
+      }
+    }
+
+    // ========================================
+    // COMMAND HISTORY
+    // ========================================
+    
+    function updateCommandHistory() {
+      const data = dataStore.getData();
+      const historyList = document.getElementById('commandHistoryList');
+      historyList.innerHTML = '';
+      
+      data.commandHistory.forEach(item => {
+        const historyDiv = document.createElement('div');
+        historyDiv.className = 'command-history-item p-2 rounded text-xs font-mono';
+        historyDiv.style.background = 'rgba(0, 0, 0, 0.3)';
+        historyDiv.innerHTML = `<span style="color: #00D4FF;">$</span> <span style="color: #00FF41;">${item.command}</span>`;
+        
+        historyDiv.addEventListener('click', () => {
+          document.getElementById('labTerminalInput').value = item.command;
+          showNotification('Command loaded from history', 'info');
+        });
+        
+        historyList.appendChild(historyDiv);
+      });
+    }
+
+    // ========================================
+    // NOTIFICATION SYSTEM
+    // ========================================
+    
+    function showNotification(message, type = 'info') {
+      // Remove existing notifications
+      const existing = document.querySelectorAll('.notification');
+      existing.forEach(n => n.remove());
+      
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.innerHTML = `
+        <div class="flex items-center space-x-3">
+          <span class="text-xl">
+            ${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}
+          </span>
+          <span class="orbitron text-sm font-bold">${message}</span>
+        </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideInRight 0.3s ease reverse';
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // ========================================
+    // MODAL SYSTEM
+    // ========================================
+    
+    function showModal(title, content, onConfirm = null) {
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <h3 class="orbitron text-2xl font-bold mb-4" style="color: #00D4FF;">${title}</h3>
+          <div class="mb-6">${content}</div>
+          <div class="flex justify-end space-x-3">
+            <button class="modal-cancel px-4 py-2 rounded orbitron text-sm" style="background: rgba(255, 51, 51, 0.2); color: #FF3333; border: 1px solid #FF3333;">
+              CANCEL
+            </button>
+            ${onConfirm ? `<button class="modal-confirm px-4 py-2 rounded orbitron text-sm" style="background: rgba(0, 255, 65, 0.2); color: #00FF41; border: 1px solid #00FF41;">CONFIRM</button>` : ''}
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      modal.querySelector('.modal-cancel').addEventListener('click', () => {
+        modal.remove();
+      });
+      
+      if (onConfirm) {
+        modal.querySelector('.modal-confirm').addEventListener('click', () => {
+          onConfirm();
+          modal.remove();
+        });
+      }
+      
+      // Close on background click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+    }
+
+    // ========================================
+    // UTILITY FUNCTIONS
+    // ========================================
+    
+    function updateNetworkStatus(status) {
+      const networkStatus = document.getElementById('networkStatus');
+      if (networkStatus) {
+        networkStatus.textContent = status;
+      }
+    }
+
+    function updateSystemStats() {
+      // Simulate dynamic system stats
+      const ramUsed = Math.floor(Math.random() * 2) + 4;
+      document.getElementById('ramUsage').textContent = `${ramUsed}GB / 8GB`;
+      
+      const cpuLoad = Math.floor(Math.random() * 30) + 40;
+      document.getElementById('cpuLoad').textContent = `${cpuLoad}%`;
+    }
+
+    // ========================================
+    // EVENT LISTENERS
+    // ========================================
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize objectives
+      updateObjectivesList();
+      updateCommandHistory();
+      
+      // Terminal command execution
+      const runCommandBtn = document.getElementById('runCommandBtn');
+      const terminalInput = document.getElementById('labTerminalInput');
+      
+      runCommandBtn.addEventListener('click', () => {
+        const command = terminalInput.value.trim();
+        if (command) {
+          executeCommand(command);
+          terminalInput.value = '';
+        }
+      });
+      
+      terminalInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const command = terminalInput.value.trim();
+          if (command) {
+            executeCommand(command);
+            terminalInput.value = '';
+          }
+        }
+      });
+      
+      // Tool buttons
+      document.querySelectorAll('.tool-launch-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tool = btn.getAttribute('data-tool');
+          launchTool(tool);
+        });
+      });
+      
+      // Terminal controls
+      document.getElementById('copyTerminalBtn').addEventListener('click', () => {
+        const terminalOutput = document.getElementById('terminalOutput');
+        navigator.clipboard.writeText(terminalOutput.textContent);
+        showNotification('Terminal output copied to clipboard!', 'success');
+      });
+      
+      document.getElementById('clearTerminalBtn').addEventListener('click', () => {
+        commandDatabase['clear'].action();
+        showNotification('Terminal cleared', 'info');
+      });
+      
+      document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+        showModal(
+          'Clear Command History?',
+          'This will remove all command history. This action cannot be undone.',
+          () => {
+            const data = dataStore.getData();
+            data.commandHistory = [];
+            dataStore.saveData(data);
+            updateCommandHistory();
+            showNotification('Command history cleared', 'success');
+          }
+        );
+      });
+      
+      // Hints
+      document.getElementById('hint1Btn').addEventListener('click', () => {
+        showModal(
+          '💡 Hint 1',
+          '<p class="text-sm">Try scanning the target with <span style="color: #00FF41; font-family: monospace;">nmap</span>. Look for services running on common ports like 22, 80, and 443.</p>',
+          () => {
+            dataStore.useHint();
+            dataStore.updateScore(-5);
+            showNotification('Hint revealed! -5 points', 'info');
+          }
+        );
+      });
+      
+      document.getElementById('hint2Btn').addEventListener('click', () => {
+        const data = dataStore.getData();
+        const progress = (data.objectives.filter(o => o.completed).length / data.objectives.length) * 100;
+        
+        if (progress >= 50) {
+          showModal(
+            '💡 Hint 2',
+            '<p class="text-sm">The vulnerable service is on port 443. Use the <span style="color: #00FF41; font-family: monospace;">exploit</span> command to launch the exploitation framework and gain access.</p>',
+            () => {
+              dataStore.useHint();
+              dataStore.updateScore(-10);
+              showNotification('Hint revealed! -10 points', 'info');
+            }
+          );
+        }
+      });
+      
+      // Flag submission
+      document.getElementById('submitFlagBtn').addEventListener('click', () => {
+        const flagInput = document.getElementById('flagInput');
+        const submittedFlag = flagInput.value.trim();
+        const data = dataStore.getData();
+        
+        if (submittedFlag === data.correctFlag) {
+          dataStore.updateObjective(6, true);
+          updateObjectivesList();
+          showNotification('🎉 Correct flag! Challenge completed!', 'success');
+          
+          showModal(
+            '🏆 Challenge Completed!',
+            `<div class="text-center">
+              <p class="text-lg mb-4">Congratulations! You've successfully completed the GANESHA Virtual Lab challenge.</p>
+              <div class="stat-card p-4 rounded-lg mb-4">
+                <div class="orbitron text-3xl font-bold mb-2" style="color: #00FF41;">${data.score} POINTS</div>
+                <div class="text-sm opacity-70">Hints Used: ${data.hintsUsed}</div>
+              </div>
+              <p class="text-sm opacity-70">Share your achievement with the community!</p>
+            </div>`
+          );
+          
+          flagInput.value = '';
+        } else if (submittedFlag) {
+          showNotification('❌ Incorrect flag. Keep trying!', 'error');
+        } else {
+          showNotification('Please enter a flag', 'info');
+        }
+      });
+      
+      // CTA buttons
+      document.getElementById('loginBtn').addEventListener('click', () => {
+        showModal(
+          '🔐 Login',
+          `<div class="space-y-4">
+            <div>
+              <label class="block text-sm mb-2" style="color: #00D4FF;">Email</label>
+              <input type="email" placeholder="your@email.com" class="w-full px-4 py-2 rounded border" style="background: rgba(0, 0, 0, 0.5); border-color: #00D4FF; color: #00FF41;">
+            </div>
+            <div>
+              <label class="block text-sm mb-2" style="color: #00D4FF;">Password</label>
+              <input type="password" placeholder="••••••••" class="w-full px-4 py-2 rounded border" style="background: rgba(0, 0, 0, 0.5); border-color: #00D4FF; color: #00FF41;">
+            </div>
+          </div>`,
+          () => {
+            showNotification('Login successful! Welcome back, hacker.', 'success');
+          }
+        );
+      });
+      
+      document.getElementById('ctaButton').addEventListener('click', () => {
+        showModal(
+          '🚀 Start Your Journey',
+          `<div class="text-center">
+            <p class="text-lg mb-6">Choose your path to becoming an elite ethical hacker:</p>
+            <div class="space-y-4">
+              <button class="path-btn w-full px-6 py-4 rounded orbitron text-sm font-bold text-left hover:scale-105 transition-transform" style="background: rgba(0, 212, 255, 0.2); border: 2px solid #00D4FF; color: #00D4FF;" onclick="showPathDetails('beginner')">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-lg">🛡️ BEGINNER PATH</span>
+                  <span class="text-xs px-2 py-1 rounded" style="background: rgba(0, 255, 65, 0.2); color: #00FF41;">3-6 MONTHS</span>
+                </div>
+                <p class="text-xs opacity-70 font-normal">Zero to Security Analyst • Linux Basics • Web Pentesting • 50+ Labs</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="text-xs opacity-60">📚 8 Courses</span>
+                  <span class="text-xs opacity-60">🎯 150+ Challenges</span>
+                  <span class="text-xs opacity-60">🏆 CEH Prep</span>
+                </div>
+              </button>
+              
+              <button class="path-btn w-full px-6 py-4 rounded orbitron text-sm font-bold text-left hover:scale-105 transition-transform" style="background: rgba(157, 0, 255, 0.2); border: 2px solid #9D00FF; color: #9D00FF;" onclick="showPathDetails('intermediate')">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-lg">⚔️ INTERMEDIATE PATH</span>
+                  <span class="text-xs px-2 py-1 rounded" style="background: rgba(255, 165, 0, 0.2); color: #FFA500;">6-12 MONTHS</span>
+                </div>
+                <p class="text-xs opacity-70 font-normal">Advanced Exploitation • Active Directory • Red Team • 100+ Labs</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="text-xs opacity-60">📚 12 Courses</span>
+                  <span class="text-xs opacity-60">🎯 300+ Challenges</span>
+                  <span class="text-xs opacity-60">🏆 OSCP Prep</span>
+                </div>
+              </button>
+              
+              <button class="path-btn w-full px-6 py-4 rounded orbitron text-sm font-bold text-left hover:scale-105 transition-transform" style="background: rgba(255, 51, 51, 0.2); border: 2px solid #FF3333; color: #FF3333;" onclick="showPathDetails('advanced')">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-lg">🔥 ADVANCED PATH</span>
+                  <span class="text-xs px-2 py-1 rounded" style="background: rgba(255, 51, 51, 0.3); color: #FF3333;">12+ MONTHS</span>
+                </div>
+                <p class="text-xs opacity-70 font-normal">Exploit Development • Malware Analysis • APT Simulation • 200+ Labs</p>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="text-xs opacity-60">📚 18 Courses</span>
+                  <span class="text-xs opacity-60">🎯 500+ Challenges</span>
+                  <span class="text-xs opacity-60">🏆 OSCE/OSEE Prep</span>
+                </div>
+              </button>
+            </div>
+            
+            <div class="mt-6 p-4 rounded-lg text-left" style="background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.3);">
+              <p class="text-xs opacity-70 mb-2">✨ <strong>All Paths Include:</strong></p>
+              <div class="grid grid-cols-2 gap-2 text-xs opacity-60">
+                <div>• 24/7 Lab Access</div>
+                <div>• Live Mentor Support</div>
+                <div>• Certificate of Completion</div>
+                <div>• Job Placement Assistance</div>
+                <div>• Lifetime Access</div>
+                <div>• Community Discord</div>
+              </div>
+            </div>
+          </div>`
+        );
+      });
+      
+      // Path details function
+      window.showPathDetails = function(path) {
+        const pathData = {
+          beginner: {
+            title: '🛡️ BEGINNER PATH',
+            color: '#00D4FF',
+            duration: '3-6 Months',
+            description: 'Perfect for complete beginners. Learn the fundamentals of cybersecurity and ethical hacking from scratch.',
+            courses: [
+              '1. Introduction to Cybersecurity',
+              '2. Linux Fundamentals & Command Line',
+              '3. Networking Basics (TCP/IP, DNS, HTTP)',
+              '4. Web Application Security',
+              '5. OWASP Top 10 Vulnerabilities',
+              '6. Burp Suite & Web Proxies',
+              '7. SQL Injection & XSS Attacks',
+              '8. Basic Cryptography & Hashing'
+            ],
+            tools: 'Nmap, Burp Suite, Wireshark, Metasploit Basics, John the Ripper, Nikto',
+            certifications: 'CEH (Certified Ethical Hacker), CompTIA Security+, eJPT',
+            outcomes: [
+              '✓ Secure entry-level security positions',
+              '✓ Perform basic penetration tests',
+              '✓ Identify and exploit common vulnerabilities',
+              '✓ Start earning from Bug Bounty programs'
+            ]
+          },
+          intermediate: {
+            title: '⚔️ INTERMEDIATE PATH',
+            color: '#9D00FF',
+            duration: '6-12 Months',
+            description: 'For those with basic knowledge. Master advanced exploitation techniques and become a professional penetration tester.',
+            courses: [
+              '1. Advanced Network Penetration Testing',
+              '2. Active Directory Attacks & Defense',
+              '3. Privilege Escalation (Windows & Linux)',
+              '4. Wireless Network Hacking (WiFi/Bluetooth)',
+              '5. Mobile Application Security (Android/iOS)',
+              '6. API Security & GraphQL Testing',
+              '7. Docker & Container Security',
+              '8. Cloud Security (AWS, Azure, GCP)',
+              '9. Red Team Tactics & MITRE ATT&CK',
+              '10. Social Engineering & Phishing',
+              '11. Buffer Overflow Exploitation',
+              '12. Python for Hackers & Automation'
+            ],
+            tools: 'Cobalt Strike, BloodHound, PowerSploit, Empire, Responder, CrackMapExec, Impacket',
+            certifications: 'OSCP (Offensive Security Certified Professional), eCPPT, GPEN',
+            outcomes: [
+              '✓ Land mid-senior penetration testing roles',
+              '✓ Conduct full-scope security assessments',
+              '✓ Exploit Active Directory environments',
+              '✓ Earn $500-$5000 per Bug Bounty finding'
+            ]
+          },
+          advanced: {
+            title: '🔥 ADVANCED PATH',
+            color: '#FF3333',
+            duration: '12+ Months',
+            description: 'Elite training for expert hackers. Master exploit development, malware analysis, and advanced persistent threat simulation.',
+            courses: [
+              '1. Advanced Exploit Development (x86/x64)',
+              '2. Reverse Engineering with IDA Pro & Ghidra',
+              '3. Malware Analysis & Forensics',
+              '4. Kernel Exploitation (Windows/Linux)',
+              '5. Advanced Web Exploitation (XXE, SSRF, Deserialization)',
+              '6. IoT & Hardware Hacking',
+              '7. Firmware Analysis & Embedded Systems',
+              '8. Advanced Persistence Techniques',
+              '9. Zero-Day Discovery & CVE Research',
+              '10. APT Simulation & Purple Teaming',
+              '11. Binary Exploitation & ROP Chains',
+              '12. Anti-Forensics & Evasion Techniques',
+              '13. ARM Architecture Exploitation',
+              '14. Hypervisor & VM Escape',
+              '15. AI/ML Security & Adversarial Attacks',
+              '16. Blockchain & Smart Contract Security',
+              '17. 5G Network Security',
+              '18. Advanced C/C++ & Assembly Programming'
+            ],
+            tools: 'IDA Pro, Ghidra, WinDbg, GDB, Frida, Binary Ninja, Volatility, Cuckoo Sandbox',
+            certifications: 'OSCE (Offensive Security Certified Expert), OSEE, GXPN, GREM, GCFA',
+            outcomes: [
+              '✓ Become a security researcher or principal engineer',
+              '✓ Discover zero-day vulnerabilities',
+              '✓ Publish CVEs and security research papers',
+              '✓ Earn $10,000+ per critical Bug Bounty',
+              '✓ Join elite Red Teams at FAANG companies'
+            ]
+          }
+        };
+        
+        const data = pathData[path];
+        
+        showModal(
+          data.title,
+          `<div class="text-left max-h-96 overflow-y-auto">
+            <div class="mb-4 p-3 rounded" style="background: rgba(${path === 'beginner' ? '0, 212, 255' : path === 'intermediate' ? '157, 0, 255' : '255, 51, 51'}, 0.1); border: 1px solid ${data.color};">
+              <p class="text-sm mb-2"><strong>Duration:</strong> ${data.duration}</p>
+              <p class="text-sm opacity-80">${data.description}</p>
+            </div>
+            
+            <div class="mb-4">
+              <h4 class="orbitron font-bold text-sm mb-3" style="color: ${data.color};">📚 Course Curriculum</h4>
+              <div class="space-y-1 text-xs opacity-80">
+                ${data.courses.map(course => `<div class="pl-2">• ${course}</div>`).join('')}
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <h4 class="orbitron font-bold text-sm mb-2" style="color: ${data.color};">���️ Tools You'll Master</h4>
+              <p class="text-xs opacity-80 pl-2">${data.tools}</p>
+            </div>
+            
+            <div class="mb-4">
+              <h4 class="orbitron font-bold text-sm mb-2" style="color: ${data.color};">🏆 Industry Certifications</h4>
+              <p class="text-xs opacity-80 pl-2">${data.certifications}</p>
+            </div>
+            
+            <div class="mb-4">
+              <h4 class="orbitron font-bold text-sm mb-2" style="color: ${data.color};">✨ Career Outcomes</h4>
+              <div class="space-y-1 text-xs opacity-80">
+                ${data.outcomes.map(outcome => `<div class="pl-2">${outcome}</div>`).join('')}
+              </div>
+            </div>
+            
+            <div class="mt-6 p-4 rounded text-center" style="background: rgba(0, 255, 65, 0.1); border: 1px solid #00FF41;">
+              <p class="text-sm font-bold mb-2" style="color: #00FF41;">🎯 Ready to Start?</p>
+              <p class="text-xs opacity-70 mb-3">Join 52,847+ students who trusted GANESHA for their cybersecurity journey</p>
+              <button class="orbitron text-xs font-bold px-6 py-2 rounded" style="background: #00FF41; color: #000000;" onclick="enrollNow('${path}')">
+                ENROLL NOW - START LEARNING
+              </button>
+            </div>
+          </div>`,
+          null
+        );
+      };
+      
+      window.enrollNow = function(path) {
+        // Close the current modal
+        document.querySelectorAll('.modal').forEach(m => m.remove());
+        
+        // Show practical learning interface
+        showPracticalLearning(path);
+      };
+      
+      // Practical Learning System
+      window.showPracticalLearning = function(path) {
+        const learningData = {
+          beginner: {
+            title: '🛡️ BEGINNER PATH - Practical Learning',
+            color: '#00D4FF',
+            modules: [
+              {
+                id: 1,
+                name: 'Linux Command Line Basics',
+                description: 'Master essential Linux commands',
+                challenges: [
+                  { id: 1, text: 'Navigate to /etc directory', command: 'cd /etc', completed: false },
+                  { id: 2, text: 'List all files including hidden ones', command: 'ls -la', completed: false },
+                  { id: 3, text: 'Find your current user', command: 'whoami', completed: false },
+                  { id: 4, text: 'Display your current path', command: 'pwd', completed: false }
+                ]
+              },
+              {
+                id: 2,
+                name: 'Network Reconnaissance',
+                description: 'Learn to scan and enumerate targets',
+                challenges: [
+                  { id: 5, text: 'Scan target for open ports', command: 'nmap -sV 192.168.1.1', completed: false },
+                  { id: 6, text: 'Check network interfaces', command: 'ifconfig', completed: false },
+                  { id: 7, text: 'View network connections', command: 'netstat -tuln', completed: false }
+                ]
+              },
+              {
+                id: 3,
+                name: 'Web Vulnerability Discovery',
+                description: 'Identify common web vulnerabilities',
+                challenges: [
+                  { id: 8, text: 'Launch Burp Suite proxy', command: 'burpsuite &', completed: false },
+                  { id: 9, text: 'Test for SQL injection', command: 'sqlmap -u "http://target.com" --dbs', completed: false }
+                ]
+              }
+            ]
+          },
+          intermediate: {
+            title: '⚔️ INTERMEDIATE PATH - Practical Learning',
+            color: '#9D00FF',
+            modules: [
+              {
+                id: 1,
+                name: 'Advanced Exploitation',
+                description: 'Master exploitation frameworks',
+                challenges: [
+                  { id: 1, text: 'Launch Metasploit console', command: 'msfconsole -q', completed: false },
+                  { id: 2, text: 'Execute the exploit', command: 'exploit', completed: false },
+                  { id: 3, text: 'Scan for vulnerabilities', command: 'nmap -sV -sC 192.168.1.1', completed: false }
+                ]
+              },
+              {
+                id: 2,
+                name: 'Active Directory Attacks',
+                description: 'Compromise AD environments',
+                challenges: [
+                  { id: 4, text: 'Enumerate domain users', command: 'net user /domain', completed: false },
+                  { id: 5, text: 'Launch BloodHound collection', command: 'bloodhound --collection', completed: false }
+                ]
+              },
+              {
+                id: 3,
+                name: 'Privilege Escalation',
+                description: 'Elevate your access',
+                challenges: [
+                  { id: 6, text: 'Check sudo permissions', command: 'sudo -l', completed: false },
+                  { id: 7, text: 'Find SUID binaries', command: 'find / -perm -4000 2>/dev/null', completed: false }
+                ]
+              }
+            ]
+          },
+          advanced: {
+            title: '🔥 ADVANCED PATH - Practical Learning',
+            color: '#FF3333',
+            modules: [
+              {
+                id: 1,
+                name: 'Exploit Development',
+                description: 'Write custom exploits',
+                challenges: [
+                  { id: 1, text: 'Analyze binary with GDB', command: 'gdb ./vulnerable_app', completed: false },
+                  { id: 2, text: 'Disassemble with objdump', command: 'objdump -d vulnerable_app', completed: false },
+                  { id: 3, text: 'Check binary protections', command: 'checksec vulnerable_app', completed: false }
+                ]
+              },
+              {
+                id: 2,
+                name: 'Reverse Engineering',
+                description: 'Analyze malware and binaries',
+                challenges: [
+                  { id: 4, text: 'Open binary in IDA Pro', command: 'ida64 malware.exe', completed: false },
+                  { id: 5, text: 'Extract strings from binary', command: 'strings malware.exe', completed: false }
+                ]
+              },
+              {
+                id: 3,
+                name: 'Zero-Day Research',
+                description: 'Discover new vulnerabilities',
+                challenges: [
+                  { id: 6, text: 'Fuzz the application', command: 'afl-fuzz -i input -o output ./target', completed: false },
+                  { id: 7, text: 'Analyze crash dumps', command: 'crash-analyzer core.dump', completed: false }
+                ]
+              }
+            ]
+          }
+        };
+        
+        const data = learningData[path];
+        let currentModuleIndex = 0;
+        let totalChallenges = 0;
+        let completedChallenges = 0;
+        
+        data.modules.forEach(module => {
+          totalChallenges += module.challenges.length;
+        });
+        
+        function renderLearningInterface() {
+          const currentModule = data.modules[currentModuleIndex];
+          
+          const modulesList = data.modules.map((module, index) => {
+            const moduleCompleted = module.challenges.every(c => c.completed);
+            const moduleChallengesCompleted = module.challenges.filter(c => c.completed).length;
+            const isActive = index === currentModuleIndex;
+            
+            return `
+              <button class="w-full text-left p-3 rounded border transition-all ${isActive ? 'scale-105' : 'opacity-60 hover:opacity-100'}" 
+                      style="background: ${isActive ? `rgba(${path === 'beginner' ? '0, 212, 255' : path === 'intermediate' ? '157, 0, 255' : '255, 51, 51'}, 0.2)` : 'rgba(0, 0, 0, 0.3)'}; 
+                             border-color: ${isActive ? data.color : '#333'};"
+                      onclick="switchModule(${index})">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="orbitron text-xs font-bold" style="color: ${data.color};">MODULE ${module.id}</span>
+                  <span class="text-xs">${moduleCompleted ? '✓' : `${moduleChallengesCompleted}/${module.challenges.length}`}</span>
+                </div>
+                <div class="text-sm font-bold mb-1">${module.name}</div>
+                <div class="text-xs opacity-70">${module.description}</div>
+              </button>
+            `;
+          }).join('');
+          
+          const challengesList = currentModule.challenges.map(challenge => {
+            return `
+              <div class="p-3 rounded border ${challenge.completed ? 'border-green-500/50 bg-green-500/10' : 'border-cyan-500/30 bg-cyan-500/5'}">
+                <div class="flex items-start space-x-3">
+                  <span class="text-xl mt-1">${challenge.completed ? '✅' : '⭕'}</span>
+                  <div class="flex-1">
+                    <p class="text-sm font-bold mb-2" style="color: ${challenge.completed ? '#00FF41' : '#00D4FF'};">${challenge.text}</p>
+                    <div class="flex items-center space-x-2">
+                      <code class="text-xs px-2 py-1 rounded" style="background: rgba(0, 0, 0, 0.5); color: #00FF41;">${challenge.command}</code>
+                      ${!challenge.completed ? `
+                        <button class="text-xs px-3 py-1 rounded font-bold orbitron hover:scale-105 transition-transform" 
+                                style="background: ${data.color}; color: #000000;"
+                                onclick="completeChallenge(${currentModuleIndex}, ${challenge.id})">
+                          TRY IT
+                        </button>
+                      ` : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+          
+          const progressPercent = Math.round((completedChallenges / totalChallenges) * 100);
+          
+          return `
+            <div class="modal">
+              <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+                <div class="flex items-center justify-between mb-6">
+                  <h3 class="orbitron text-xl font-bold" style="color: ${data.color};">${data.title}</h3>
+                  <button class="text-2xl hover:scale-110 transition-transform" onclick="closeLearning()">✕</button>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="mb-6 p-4 rounded-lg" style="background: rgba(${path === 'beginner' ? '0, 212, 255' : path === 'intermediate' ? '157, 0, 255' : '255, 51, 51'}, 0.1); border: 1px solid ${data.color};">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="orbitron text-sm font-bold">OVERALL PROGRESS</span>
+                    <span class="orbitron text-sm font-bold" style="color: #00FF41;">${completedChallenges}/${totalChallenges} (${progressPercent}%)</span>
+                  </div>
+                  <div class="w-full h-3 rounded-full" style="background: rgba(0, 0, 0, 0.3);">
+                    <div class="h-full rounded-full transition-all duration-500" style="width: ${progressPercent}%; background: linear-gradient(90deg, ${data.color}, #00FF41);"></div>
+                  </div>
+                  ${progressPercent === 100 ? `
+                    <div class="mt-3 text-center">
+                      <p class="orbitron text-lg font-bold mb-2" style="color: #00FF41;">🎉 PATH COMPLETED!</p>
+                      <p class="text-sm opacity-70 mb-3">You've mastered all challenges in the ${path.toUpperCase()} path!</p>
+                      <button class="orbitron text-sm font-bold px-6 py-2 rounded" style="background: #00FF41; color: #000000;" onclick="claimCertificate('${path}')">
+                        🏆 CLAIM CERTIFICATE
+                      </button>
+                    </div>
+                  ` : ''}
+                </div>
+                
+                <div class="grid lg:grid-cols-3 gap-6">
+                  <!-- Modules Sidebar -->
+                  <div class="lg:col-span-1 space-y-3">
+                    <h4 class="orbitron text-sm font-bold mb-3 flex items-center">
+                      <span class="mr-2">📚</span> MODULES
+                    </h4>
+                    ${modulesList}
+                  </div>
+                  
+                  <!-- Challenges Area -->
+                  <div class="lg:col-span-2">
+                    <div class="mb-4">
+                      <h4 class="orbitron text-lg font-bold mb-2" style="color: ${data.color};">
+                        ${currentModule.name}
+                      </h4>
+                      <p class="text-sm opacity-70 mb-4">${currentModule.description}</p>
+                    </div>
+                    
+                    <div class="space-y-3" id="challengesList">
+                      ${challengesList}
+                    </div>
+                    
+                    <!-- Live Terminal -->
+                    <div class="mt-6 border-2 rounded-lg" style="border-color: ${data.color};">
+                      <div class="flex items-center justify-between px-4 py-2" style="background: rgba(${path === 'beginner' ? '0, 212, 255' : path === 'intermediate' ? '157, 0, 255' : '255, 51, 51'}, 0.1); border-bottom: 1px solid ${data.color};">
+                        <div class="flex items-center space-x-2">
+                          <div class="w-3 h-3 rounded-full" style="background: #FF3333;"></div>
+                          <div class="w-3 h-3 rounded-full" style="background: #FFA500;"></div>
+                          <div class="w-3 h-3 rounded-full" style="background: #00FF41;"></div>
+                          <span class="orbitron text-xs ml-2" style="color: ${data.color};">PRACTICE TERMINAL</span>
+                        </div>
+                      </div>
+                      <div id="practiceTerminalOutput" class="p-4 font-mono text-sm" style="background: #000000; color: #00FF41; height: 200px; overflow-y: auto;">
+                        <div class="mb-2" style="color: #00D4FF;">┌──(student㉿ganesha)-[~]</div>
+                        <div class="mb-2" style="color: #00D4FF;">└─$ <span style="color: #00FF41;">Ready to practice! Try the commands above.</span></div>
+                        <div style="color: #00D4FF;">└─$ <span class="terminal-cursor" style="color: #00FF41;"></span></div>
+                      </div>
+                      <div class="flex items-center px-4 py-2 space-x-2" style="background: rgba(0, 0, 0, 0.5); border-top: 1px solid ${data.color};">
+                        <span class="text-xs" style="color: #00FF41;">➜</span>
+                        <input 
+                          type="text" 
+                          placeholder="Type command and press Enter..." 
+                          class="flex-1 bg-transparent border-none outline-none text-sm font-mono"
+                          style="color: #00FF41;"
+                          id="practiceTerminalInput"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        
+        function updateLearningInterface() {
+          const existingModal = document.querySelector('.modal');
+          if (existingModal) {
+            existingModal.outerHTML = renderLearningInterface();
+            attachLearningEventListeners();
+          }
+        }
+        
+        function attachLearningEventListeners() {
+          const practiceInput = document.getElementById('practiceTerminalInput');
+          if (practiceInput) {
+            practiceInput.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') {
+                const command = practiceInput.value.trim();
+                if (command) {
+                  executePracticeCommand(command);
+                  practiceInput.value = '';
+                }
+              }
+            });
+          }
+        }
+        
+        function executePracticeCommand(command) {
+          const output = document.getElementById('practiceTerminalOutput');
+          const commandLine = document.createElement('div');
+          commandLine.className = 'mb-2';
+          commandLine.innerHTML = `<span style="color: #00D4FF;">└─$</span> <span style="color: #00FF41;">${command}</span>`;
+          output.appendChild(commandLine);
+          
+          // Check if command matches any challenge
+          let matched = false;
+          data.modules[currentModuleIndex].challenges.forEach(challenge => {
+            if (command.toLowerCase().includes(challenge.command.toLowerCase().split(' ')[0]) && !challenge.completed) {
+              const resultLine = document.createElement('div');
+              resultLine.className = 'mb-2';
+              resultLine.style.color = '#00FF41';
+              resultLine.textContent = '✓ Challenge completed! Great work!';
+              output.appendChild(resultLine);
+              
+              challenge.completed = true;
+              completedChallenges++;
+              matched = true;
+              
+              showNotification(`Challenge completed! +10 XP`, 'success');
+              updateLearningInterface();
+            }
+          });
+          
+          if (!matched) {
+            const resultLine = document.createElement('div');
+            resultLine.className = 'mb-2 opacity-70';
+            resultLine.textContent = 'Command executed. Keep practicing!';
+            output.appendChild(resultLine);
+          }
+          
+          const newPrompt = document.createElement('div');
+          newPrompt.innerHTML = `<span style="color: #00D4FF;">└─$</span> <span class="terminal-cursor" style="color: #00FF41;"></span>`;
+          output.appendChild(newPrompt);
+          
+          output.scrollTop = output.scrollHeight;
+        }
+        
+        window.switchModule = function(index) {
+          currentModuleIndex = index;
+          updateLearningInterface();
+        };
+        
+        window.completeChallenge = function(moduleIndex, challengeId) {
+          const module = data.modules[moduleIndex];
+          const challenge = module.challenges.find(c => c.id === challengeId);
+          
+          if (challenge && !challenge.completed) {
+            // Add to practice terminal
+            const practiceInput = document.getElementById('practiceTerminalInput');
+            if (practiceInput) {
+              practiceInput.value = challenge.command;
+              practiceInput.focus();
+            }
+            
+            showNotification(`Try running: ${challenge.command}`, 'info');
+          }
+        };
+        
+        window.closeLearning = function() {
+          document.querySelectorAll('.modal').forEach(m => m.remove());
+          showNotification('Progress saved! Come back anytime to continue learning.', 'success');
+        };
+        
+        window.claimCertificate = function(pathName) {
+          showNotification(`🏆 Certificate of Completion - ${pathName.toUpperCase()} PATH earned!`, 'success');
+          setTimeout(() => {
+            showModal(
+              '🎓 Certificate of Completion',
+              `<div class="text-center">
+                <div class="mb-6 p-8 rounded-lg" style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(157, 0, 255, 0.2)); border: 2px solid ${data.color};">
+                  <div class="text-6xl mb-4">🏆</div>
+                  <h4 class="orbitron text-2xl font-bold mb-2" style="color: #00FF41;">CERTIFICATE OF COMPLETION</h4>
+                  <p class="text-lg mb-4">This certifies that you have successfully completed</p>
+                  <p class="orbitron text-xl font-bold mb-4" style="color: ${data.color};">${pathName.toUpperCase()} PATH</p>
+                  <p class="text-sm opacity-70 mb-4">GANESHA Cybersecurity Training Platform</p>
+                  <div class="flex items-center justify-center space-x-4 text-sm">
+                    <div><strong>${totalChallenges}</strong> Challenges Completed</div>
+                    <div><strong>100%</strong> Progress</div>
+                  </div>
+                </div>
+                <button class="orbitron text-sm font-bold px-6 py-2 rounded" style="background: #00FF41; color: #000000;" onclick="document.querySelectorAll('.modal').forEach(m => m.remove())">
+                  DOWNLOAD CERTIFICATE
+                </button>
+              </div>`
+            );
+          }, 500);
+        };
+        
+        // Initial render
+        document.body.insertAdjacentHTML('beforeend', renderLearningInterface());
+        attachLearningEventListeners();
+        
+        showNotification(`🚀 ${path.toUpperCase()} path activated! Start with Module 1.`, 'success');
+      };
+      
+      // Update system stats every 3 seconds
+      setInterval(updateSystemStats, 3000);
+    });
+
+    // ========================================
+    // ELEMENT SDK INTEGRATION
+    // ========================================
+
+    async function onConfigChange(config) {
+      const platformName = config.platform_name || defaultConfig.platform_name;
+      const tagline = config.tagline || defaultConfig.tagline;
+      const heroTitle = config.hero_title || defaultConfig.hero_title;
+      const heroSubtitle = config.hero_subtitle || defaultConfig.hero_subtitle;
+      const ctaButton = config.cta_button || defaultConfig.cta_button;
+      
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+
+      const platformNameEl = document.getElementById('platformName');
+      const taglineEl = document.getElementById('tagline');
+      const heroTitleEl = document.getElementById('heroTitle');
+      const heroSubtitleEl = document.getElementById('heroSubtitle');
+      const ctaButtonEl = document.getElementById('ctaButton');
+
+      if (platformNameEl) platformNameEl.textContent = platformName;
+      if (taglineEl) taglineEl.textContent = tagline;
+      if (heroTitleEl) {
+        const titleParts = heroTitle.split(' ');
+        heroTitleEl.innerHTML = `<span class="glow-text" style="color: ${primaryColor};">${titleParts.slice(0, 2).join(' ')}</span><br><span class="glow-text" style="color: ${secondaryColor};">${titleParts.slice(2).join(' ')}</span>`;
+      }
+      if (heroSubtitleEl) {
+        heroSubtitleEl.textContent = heroSubtitle;
+        heroSubtitleEl.style.color = accentColor;
+      }
+      if (ctaButtonEl) ctaButtonEl.textContent = ctaButton + ' →';
+      
+      document.body.style.background = backgroundColor;
+      document.body.style.color = textColor;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["platform_name", config.platform_name || defaultConfig.platform_name],
+        ["tagline", config.tagline || defaultConfig.tagline],
+        ["hero_title", config.hero_title || defaultConfig.hero_title],
+        ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+        ["cta_button", config.cta_button || defaultConfig.cta_button]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // ========================================
+    // MATRIX BACKGROUND ANIMATION
+    // ========================================
+    
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const chars = '01ア����ウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+    
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#00FF41';
+      ctx.font = `${fontSize}px monospace`;
+      
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    
+    setInterval(drawMatrix, 50);
+    
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // ========================================
+    // TERMINAL TYPING ANIMATION
+    // ========================================
+    
+    const terminalText = document.getElementById('terminalText');
+    const commands = [
+      'sudo apt update && apt upgrade',
+      'nmap -sV -sC target.com',
+      'msfconsole -q',
+      'sqlmap -u "http://target.com" --dbs',
+      'hydra -l admin -P wordlist.txt ssh://target.com'
+    ];
+    let commandIndex = 0;
+    let charIndex = 0;
+    
+    function typeCommand() {
+      if (charIndex < commands[commandIndex].length) {
+        terminalText.textContent = commands[commandIndex].substring(0, charIndex + 1);
+        charIndex++;
+        setTimeout(typeCommand, 100);
+      } else {
+        setTimeout(() => {
+          charIndex = 0;
+          commandIndex = (commandIndex + 1) % commands.length;
+          typeCommand();
+        }, 3000);
+      }
+    }
+    
+    typeCommand();
+
+    // ========================================
+    // COUNTER ANIMATION
+    // ========================================
+    
+    function animateCounter(id, target) {
+      const element = document.getElementById(id);
+      if (!element) return;
+      let current = 0;
+      const increment = target / 100;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target.toLocaleString() + '+';
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current).toLocaleString();
+        }
+      }, 20);
+    }
+
+    setTimeout(() => {
+      animateCounter('studentCount', 52847);
+      animateCounter('cveCount', 247);
+      animateCounter('certCount', 18392);
+    }, 500);
+
+    // ========================================
+    // SESSION TIMER
+    // ========================================
+    
+    let sessionSeconds = 9912;
+    setInterval(() => {
+      sessionSeconds++;
+      const hours = Math.floor(sessionSeconds / 3600);
+      const minutes = Math.floor((sessionSeconds % 3600) / 60);
+      const secs = sessionSeconds % 60;
+      const timerEl = document.getElementById('sessionTimer');
+      if (timerEl) {
+        timerEl.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+    }, 1000);
+
+    // ========================================
+    // SMOOTH SCROLL
+    // ========================================
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b84954164dd6e29',t:'MTc2NzQ2NTE5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
